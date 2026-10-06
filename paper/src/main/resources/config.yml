@@ -1,0 +1,48 @@
+# ============================================================
+#  EterTab (Paper) : sidebar et grade au-dessus de la tête
+# ============================================================
+#
+#  La liste Tab de tout le réseau est gérée par EterTab-Velocity, sur le proxy.
+#  Ici : la sidebar (textes dans lang/) et le grade LuckPerms au-dessus de la tête.
+#  Facultatifs : LuckPerms (grades), Vault + EterEconomy (<balance>), PlaceholderAPI (%variables%).
+#  Langue par défaut et palette : EterLib/config.yml.
+#  Toute modification nécessite un redémarrage du serveur.
+
+# Rafraîchissement de la sidebar et des grades, en ticks (20 ticks = 1 seconde).
+update-interval: 20
+
+# Heure et date affichées (<time>, <date>).
+time-zone: Europe/Paris
+time-format: "HH:mm"
+date-format: "dd/MM/yyyy"
+
+sidebar:
+  enabled: true
+  # Mondes où la sidebar est cachée (ex : un monde d'événement).
+  disabled-worlds: []
+
+nametags:
+  # Grade (préfixe et suffixe LuckPerms) au-dessus de la tête.
+  enabled: true
+  # Couleur du pseudo au-dessus de la tête : white, gray, gold, aqua...
+  name-color: white
+
+# Trie aussi le Tab de CE serveur par grade (utile sans proxy ; avec EterTab-Velocity, c'est le proxy qui trie).
+tab-order: true
+
+# Animations, utilisables dans les textes avec <anim_<nom>> (ex : <anim_logo>).
+# interval : durée d'une image en millisecondes ; frames : les images, en MiniMessage.
+animations:
+  logo:
+    interval: 120
+    frames:
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-1.0>ETERNOM</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.8>ETERNOM</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.6>ETERNOM</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.4>ETERNOM</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.2>ETERNOM</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.0>ETERNOM</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.2>ETERNOM</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.4>ETERNOM</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.6>ETERNOM</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.8>ETERNOM</gradient></bold>"

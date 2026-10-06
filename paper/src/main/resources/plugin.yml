@@ -1,0 +1,10 @@
+name: EterTab
+version: '${version}'
+
+main: fr.eternom.eterTab.paper.Main
+api-version: '26.2'
+load: POSTWORLD
+authors: [ NadTum ]
+description: Sidebar et grade au-dessus de la tête (la liste Tab du réseau est gérée par EterTab-Velocity).
+depend: [EterLib]
+softdepend: [LuckPerms, Vault, PlaceholderAPI]

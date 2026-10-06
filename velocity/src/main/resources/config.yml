@@ -1,0 +1,56 @@
+# ============================================================
+#  EterTab (Velocity) : liste Tab de tout le réseau
+# ============================================================
+#
+#  Chaque joueur voit dans le Tab tous les joueurs du réseau, quel que soit
+#  leur serveur, avec leur grade LuckPerms (s'il est installé sur le proxy),
+#  triés par grade. Les textes de l'en-tête et du pied sont dans lang/.
+#  Toute modification nécessite un redémarrage du proxy.
+
+# Langue utilisée si celle du joueur n'existe pas dans lang/.
+default-language: en_us
+
+# Rafraîchissement de la liste et des animations, en millisecondes.
+update-interval: 1000
+
+# Heure et date affichées (<time>, <date>).
+time-zone: Europe/Paris
+time-format: "HH:mm"
+date-format: "dd/MM/yyyy"
+
+# Palette des messages : à garder identique à EterLib/config.yml (language.colors).
+colors:
+  primary: '#FF7A00'   # titres
+  accent: '#FFA640'    # mots importants
+  info: gray           # texte courant (gris clair)
+  error: '#FF5C5C'
+  success: '#5FD38D'
+
+tab:
+  # Nom d'un joueur dans la liste. Variables : <prefix> <suffix> (grade LuckPerms), <name>, <group>, <server>.
+  player-format: "<prefix><white><name></white><suffix> <dark_gray>· <info><server>"
+  # Trier par poids du grade LuckPerms (les plus hauts en premier), sinon ordre de Minecraft.
+  sort-by-rank: true
+
+# Animations, utilisables dans tous les textes avec <anim_<nom>> (ex : <anim_logo>).
+# interval : durée d'une image en millisecondes ; frames : les images, en MiniMessage.
+animations:
+  logo:
+    interval: 120
+    frames:
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-1.0>E T E R N O M</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.8>E T E R N O M</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.6>E T E R N O M</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.4>E T E R N O M</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.2>E T E R N O M</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.0>E T E R N O M</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.2>E T E R N O M</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.4>E T E R N O M</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.6>E T E R N O M</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.8>E T E R N O M</gradient></bold>"
+  dots:
+    interval: 400
+    frames:
+      - "<accent>●<dark_gray>●●"
+      - "<dark_gray>●<accent>●<dark_gray>●"
+      - "<dark_gray>●●<accent>●"

@@ -1,0 +1,22 @@
+# EterTab (Velocity) messages, MiniMessage format: https://docs.advntr.dev/minimessage/format
+# Palette tags (config.yml > colors): <primary> <accent> <info> <error> <success>
+# Animations from config.yml: <anim_logo>, <anim_dots>...
+# Header/footer variables: <player> <online> <max> <server> <server_online> <ping> <time> <date> <servers>
+# A list = one line per item. A missing key falls back to the plugin's built-in text.
+
+tab:
+  header:
+    - ""
+    - "<anim_logo>"
+    - "<info>Welcome, <accent><player></accent>!"
+    - ""
+  footer:
+    - ""
+    - "<info>Online <accent><online></accent><dark_gray>/</dark_gray><accent><max></accent> <dark_gray>·</dark_gray> <info>Server <accent><server></accent> <dark_gray>·</dark_gray> <info>Ping <accent><ping>ms"
+    - "<servers>"
+    - ""
+    - "<anim_dots> <info>discord.gg/eternom <dark_gray>·</dark_gray> <info>eternom.fr <dark_gray>·</dark_gray> <accent><time></accent> <anim_dots>"
+    - ""
+  # One server in <servers>: <name> and <count> (players on it)
+  server-entry: "<info><name> <accent><count>"
+  server-separator: " <dark_gray>·</dark_gray> "

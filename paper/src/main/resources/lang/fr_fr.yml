@@ -1,0 +1,22 @@
+# Messages d'EterTab (Paper), format MiniMessage : https://docs.advntr.dev/minimessage/format
+# Balises de la palette (EterLib/config.yml > language.colors) : <primary> <accent> <info> <error> <success>
+# Animations de config.yml : <anim_logo>...
+# Variables : <player> <rank> <suffix> <group> <balance> <server> <online> <max> <network> <ping>
+#             <world> <x> <y> <z> <time> <date>, et les %variables% de PlaceholderAPI s'il est installé.
+# sidebar.lines : une ligne par élément (15 max). Une clé absente reprend le texte intégré au plugin.
+
+sidebar:
+  title: "<anim_logo>"
+  lines:
+    - "<dark_gray><date> · <time>"
+    - ""
+    - "<accent><player>"
+    - " <dark_gray>▸ <info>Grade <rank>"
+    - " <dark_gray>▸ <info>Argent <accent><balance>"
+    - ""
+    - "<accent>Serveur"
+    - " <dark_gray>▸ <info>Nom <accent><server>"
+    - " <dark_gray>▸ <info>En ligne <accent><online></accent><dark_gray>/</dark_gray><accent><network>"
+    - " <dark_gray>▸ <info>Ping <accent><ping>ms"
+    - ""
+    - "<primary>eternom.fr"
