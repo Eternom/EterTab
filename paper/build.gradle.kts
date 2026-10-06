@@ -14,7 +14,7 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:26.2.build.129-stable")
     // Socle commun : base, langues, palette, joueurs du réseau (plugin EterLib installé sur le serveur)
-    compileOnly("com.github.Eternom:EterLib:1.4.0")
+    compileOnly("com.github.Eternom:EterLib:1.4.1")
     // Grades (LuckPerms), solde (Vault -> EterEconomy), variables d'autres plugins (PlaceholderAPI) : tous facultatifs
     compileOnly("net.luckperms:api:5.5")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1") {
