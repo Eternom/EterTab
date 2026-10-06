@@ -5,6 +5,7 @@
 #            <world> <x> <y> <z> <time> <date>, and %placeholders% from PlaceholderAPI if installed.
 # Avoid <dark_gray> here: almost invisible on the sidebar background; prefer <#8A8A8A>.
 # sidebar.lines: one line per item (15 max). A missing key falls back to the plugin's built-in text.
+# The message prefix ("Core") is shared by all plugins: EterLib/config.yml > language.prefix.
 
 sidebar:
   hidden: "<info>Sidebar <accent>hidden</accent>. <info>Type <accent>/sidebar</accent> to show it again."
@@ -23,8 +24,6 @@ sidebar:
     - "  <info>Ping <white><ping>ms"
     - ""
     - "<#8A8A8A>eternom.fr"
-
-prefix: "<gradient:#FF7A00:#FFB347><bold>EterTab</bold></gradient> <dark_gray>» "
 
 command:
   players-only: "<error>This command can only be used by players."

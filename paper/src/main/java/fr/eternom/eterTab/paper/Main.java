@@ -34,8 +34,8 @@ import java.util.Locale;
  */
 public final class Main extends JavaPlugin {
 
-    /** Version minimale d'EterLib : les méthodes utilisées par ce plugin n'existent pas avant. */
-    private static final String REQUIRED_ETERLIB = "1.4.0";
+    /** Version minimale d'EterLib : préfixe commun des messages (language.prefix) depuis 1.5.0. */
+    private static final String REQUIRED_ETERLIB = "1.5.0";
 
     /** Soldes et total du réseau : relus en tâche de fond toutes les 5 secondes. */
     private static final long SLOW_REFRESH_TICKS = 5 * 20;
