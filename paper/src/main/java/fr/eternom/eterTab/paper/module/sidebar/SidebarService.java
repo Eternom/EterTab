@@ -34,15 +34,18 @@ public class SidebarService {
     private final Messages messages;
     private final Placeholders placeholders;
     private final Boards boards;
+    private final SidebarPreferences preferences;
     private final Set<String> disabledWorlds;
 
     private final Map<UUID, Component> titles = new ConcurrentHashMap<>();
     private final Map<UUID, List<Component>> shown = new ConcurrentHashMap<>();
 
-    public SidebarService(Messages messages, Placeholders placeholders, Boards boards, Set<String> disabledWorlds) {
+    public SidebarService(Messages messages, Placeholders placeholders, Boards boards, SidebarPreferences preferences,
+                          Set<String> disabledWorlds) {
         this.messages = messages;
         this.placeholders = placeholders;
         this.boards = boards;
+        this.preferences = preferences;
         this.disabledWorlds = disabledWorlds;
     }
 
@@ -54,11 +57,8 @@ public class SidebarService {
             return;
         }
         Objective objective = board.getObjective(OBJECTIVE);
-        if (disabledWorlds.contains(player.getWorld().getName())) {
-            if (objective != null) {
-                objective.unregister();
-                forget(uuid);
-            }
+        if (preferences.isHidden(uuid) || disabledWorlds.contains(player.getWorld().getName())) {
+            hide(player);
             return;
         }
 
@@ -92,6 +92,16 @@ public class SidebarService {
             board.resetScores(entry(i));
         }
         shown.put(uuid, lines);
+    }
+
+    /** Retire la sidebar du joueur (masquée par /sidebar, ou monde où elle est désactivée). */
+    public void hide(Player player) {
+        Scoreboard board = boards.of(player.getUniqueId());
+        Objective objective = board == null ? null : board.getObjective(OBJECTIVE);
+        if (objective != null) {
+            objective.unregister();
+        }
+        forget(player.getUniqueId());
     }
 
     public void forget(UUID player) {

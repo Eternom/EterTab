@@ -7,6 +7,9 @@
 # sidebar.lines: one line per item (15 max). A missing key falls back to the plugin's built-in text.
 
 sidebar:
+  hidden: "<info>Sidebar <accent>hidden</accent>. <info>Type <accent>/sidebar</accent> to show it again."
+  shown: "<info>Sidebar <accent>shown</accent>."
+  unavailable: "<error>The sidebar is disabled on this server."
   title: "<anim_logo>"
   lines:
     - ""
@@ -20,3 +23,8 @@ sidebar:
     - "  <info>Ping <white><ping>ms"
     - ""
     - "<#8A8A8A>eternom.fr"
+
+prefix: "<gradient:#FF7A00:#FFB347><bold>EterTab</bold></gradient> <dark_gray>» "
+
+command:
+  players-only: "<error>This command can only be used by players."

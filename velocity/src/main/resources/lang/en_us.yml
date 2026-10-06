@@ -21,3 +21,25 @@ tab:
   # One server in <servers>: <name> (display name) and <count> (players on it)
   server-entry: "<info><name> <accent><count>"
   server-separator: "   <#8A8A8A>|</#8A8A8A>   "
+
+prefix: "<gradient:#FF7A00:#FFB347><bold>EterTab</bold></gradient> <dark_gray>» "
+
+command:
+  usage: '<error>Usage: <accent>/etertab reload</accent> <info>or <accent>/etertab maintenance on|off|status'
+  reloaded: "<info>Configuration and languages reloaded."
+  reload-failed: "<error>Configuration unreadable: nothing was changed. Details in the proxy console."
+
+maintenance:
+  enabled: "<info>Maintenance <accent>enabled</accent>: only allowed players can join."
+  disabled: "<info>Maintenance <accent>disabled</accent>: the network is open to everyone."
+  status-on: "<info>Maintenance is <accent>enabled</accent>."
+  status-off: "<info>Maintenance is <accent>disabled</accent>."
+  save-failed: "<error>Could not save the maintenance state (see the console)."
+  # Message shown to players sent away (a list = several lines)
+  kick:
+    - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00>E T E R N O M</gradient></bold>"
+    - ""
+    - "<error>The server is under maintenance."
+    - "<info>Come back in a moment!"
+    - ""
+    - "<info>More info: <accent>discord.gg/eternom"

@@ -8,3 +8,15 @@ authors: [ NadTum ]
 description: Sidebar et grade au-dessus de la tête (la liste Tab du réseau est gérée par EterTab-Velocity).
 depend: [EterLib]
 softdepend: [LuckPerms, Vault, EterEconomy, PlaceholderAPI]
+
+commands:
+  sidebar:
+    description: Masque ou réaffiche ta sidebar (sur tous les serveurs).
+    usage: /sidebar
+    aliases: [sb]
+    permission: etertab.sidebar.toggle
+
+permissions:
+  etertab.sidebar.toggle:
+    description: Masquer ou réafficher sa sidebar.
+    default: true

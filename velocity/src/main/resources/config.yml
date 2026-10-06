@@ -57,3 +57,51 @@ animations:
       - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.4>E T E R N O M</gradient></bold>"
       - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.6>E T E R N O M</gradient></bold>"
       - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.8>E T E R N O M</gradient></bold>"
+
+# ============================================================
+#  MOTD : ce qu'affiche la liste des serveurs du jeu
+# ============================================================
+#
+#  En config et pas dans lang/ : le jeu n'envoie pas sa langue quand il interroge un serveur.
+#  Une ligne fait environ 45 caractères ; <newline> passe à la deuxième ligne.
+#  Variables : <online> <max>, et les animations (<anim_logo>...). /etertab reload pour appliquer.
+
+motd:
+  enabled: true
+  # random : un message au hasard à chaque rafraîchissement de la liste ; rotate : chacun son tour.
+  mode: rotate
+  rotate-seconds: 10
+  messages:
+    - "           <bold><gradient:#FF7A00:#FFE0B2:#FF7A00>E T E R N O M</gradient></bold><newline><info>     Survie multi-serveurs <#8A8A8A>|</#8A8A8A> <accent>Rejoins-nous !"
+    - "           <bold><gradient:#FF7A00:#FFE0B2:#FF7A00>E T E R N O M</gradient></bold><newline><info>  Homes, inventaire synchronisé et économie"
+  # Maximum affiché ; 0 = toujours un de plus que les joueurs en ligne.
+  max-players: 500
+  # Lignes au survol du nombre de joueurs, puis la liste des joueurs connectés.
+  hover:
+    - "<primary><bold>Eternom</bold>"
+    - "<info>Survie multi-serveurs"
+    - ""
+  hover-show-players: true
+  hover-max-players: 10
+  hover-player: "<#8A8A8A>• <white><name>"
+  hover-more: "<info>... et <accent><count></accent> autres"
+  # Texte de version (s'affiche quand la version du joueur n'est pas compatible). Vide : celui de Velocity.
+  version-name: ""
+  # Icône : PNG de 64x64 pixels déposé dans plugins/etertab/. Vide : celle de Velocity (server-icon.png).
+  favicon: ""
+
+# ============================================================
+#  Maintenance : /etertab maintenance on|off
+# ============================================================
+#
+#  Seuls les joueurs avec la permission etertab.maintenance.bypass peuvent se connecter ;
+#  les autres sont renvoyés (message dans lang/). L'état est gardé dans maintenance.yml.
+
+maintenance:
+  motd:
+    - "           <bold><gradient:#FF7A00:#FFE0B2:#FF7A00>E T E R N O M</gradient></bold><newline><error>   Maintenance en cours <#8A8A8A>|</#8A8A8A> <info>reviens vite !"
+  hover:
+    - "<error>Maintenance en cours"
+    - "<info>Suis l'avancement sur discord.gg/eternom"
+  # Remplace les barres de signal pendant la maintenance.
+  version-name: "<error>Maintenance"

@@ -2,6 +2,7 @@ package fr.eternom.eterTab.paper;
 
 import fr.eternom.eterLib.EterLib;
 import fr.eternom.eterLib.helper.message.Messages;
+import fr.eternom.eterTab.paper.listeners.Commands;
 import fr.eternom.eterTab.paper.listeners.Events;
 import fr.eternom.eterTab.paper.module.nametag.NametagService;
 import fr.eternom.eterTab.paper.module.placeholder.Animations;
@@ -9,6 +10,7 @@ import fr.eternom.eterTab.paper.module.placeholder.Placeholders;
 import fr.eternom.eterTab.paper.module.placeholder.Ranks;
 import fr.eternom.eterTab.paper.module.scoreboard.Boards;
 import fr.eternom.eterTab.paper.module.scoreboard.DisplayTask;
+import fr.eternom.eterTab.paper.module.sidebar.SidebarPreferences;
 import fr.eternom.eterTab.paper.module.sidebar.SidebarService;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.luckperms.api.LuckPermsProvider;
@@ -33,6 +35,8 @@ public final class Main extends JavaPlugin {
 
     /** Soldes et total du réseau : relus en tâche de fond toutes les 5 secondes. */
     private static final long SLOW_REFRESH_TICKS = 5 * 20;
+    /** Préfixe des tables d'EterTab dans la base commune : etertab_preferences. */
+    private static final String TABLE_PREFIX = "etertab_";
 
     private Boards boards;
     private DisplayTask display;
@@ -58,17 +62,24 @@ public final class Main extends JavaPlugin {
                 DateTimeFormatter.ofPattern(getConfig().getString("date-format", "dd/MM/yyyy")));
 
         boards = new Boards();
-        SidebarService sidebar = getConfig().getBoolean("sidebar.enabled", true)
-                ? new SidebarService(messages, placeholders, boards, new HashSet<>(getConfig().getStringList("sidebar.disabled-worlds")))
+        boolean sidebarEnabled = getConfig().getBoolean("sidebar.enabled", true);
+        // Préférences (sidebar masquée par /sidebar) : table etertab_preferences, partagée entre les serveurs
+        SidebarPreferences preferences = sidebarEnabled ? new SidebarPreferences(lib.database(TABLE_PREFIX)) : null;
+        SidebarService sidebar = sidebarEnabled
+                ? new SidebarService(messages, placeholders, boards, preferences, new HashSet<>(getConfig().getStringList("sidebar.disabled-worlds")))
                 : null;
         NametagService nametags = getConfig().getBoolean("nametags.enabled", true)
                 ? new NametagService(boards, nameColor(), getConfig().getBoolean("tab-order", true))
                 : null;
         display = new DisplayTask(ranks, new Animations(getConfig().getConfigurationSection("animations")), sidebar, nametags);
 
-        new Events(this, boards, display);
+        new Events(this, boards, display, preferences);
+        new Commands(this, messages, preferences, sidebar);
         // Rechargement à chaud (/reload, PlugMan) : les joueurs déjà connectés ont aussi droit à leur tableau
         Bukkit.getOnlinePlayers().forEach(player -> {
+            if (preferences != null) {
+                Bukkit.getScheduler().runTaskAsynchronously(this, () -> preferences.load(player.getUniqueId()));
+            }
             Scoreboard board = boards.create(player);
             if (nametags != null) {
                 nametags.copyAllTo(board, Bukkit.getOnlinePlayers());
