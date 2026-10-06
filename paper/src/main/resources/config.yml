@@ -9,8 +9,7 @@
 #  Toute modification nécessite un redémarrage du serveur.
 
 # Le nom affiché de ce serveur (<server> dans la sidebar) se règle dans EterLib/config.yml
-# (server-display-name), commun à tous les plugins. À garder cohérent avec server-names
-# d'EterTab-Velocity (le proxy n'a pas EterLib).
+# (server-display-name), commun à tous les plugins et transmis au proxy (liste Tab).
 
 # Rafraîchissement de la sidebar et des grades, en ticks (20 ticks = 1 seconde).
 update-interval: 20

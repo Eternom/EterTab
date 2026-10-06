@@ -11,6 +11,7 @@ import fr.eternom.eterTab.common.Animations;
 import fr.eternom.eterTab.velocity.helper.Messages;
 import fr.eternom.eterTab.common.Ranks;
 import fr.eternom.eterTab.common.Ranks.Rank;
+import fr.eternom.eterTab.velocity.module.server.ServerNames;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -45,15 +46,14 @@ public class TabService {
     private final String playerFormat;
     private final String otherServerFormat;
     private final boolean sortByRank;
-    /** Nom technique du serveur (velocity.toml) -> nom affiché (server-names). */
-    private final Map<String, String> displayNames = new HashMap<>();
+    private final ServerNames serverNames;
     private final ZoneId zone;
     private final DateTimeFormatter timeFormat;
     private final DateTimeFormatter dateFormat;
     /** Joueurs que NOUS avons mis dans les listes : les seuls qu'on retire (pas les PNJ d'autres plugins). */
     private final Set<UUID> managed = ConcurrentHashMap.newKeySet();
 
-    public TabService(ProxyServer proxy, Messages messages, Animations animations, Ranks ranks, Config config) {
+    public TabService(ProxyServer proxy, Messages messages, Animations animations, Ranks ranks, ServerNames serverNames, Config config) {
         this.proxy = proxy;
         this.messages = messages;
         this.animations = animations;
@@ -61,9 +61,7 @@ public class TabService {
         this.playerFormat = config.getString("tab.player-format", "<prefix><white><name></white><suffix>");
         this.otherServerFormat = config.getString("tab.player-format-other-server", playerFormat);
         this.sortByRank = config.getBoolean("tab.sort-by-rank", true);
-        for (String server : config.getKeys("server-names")) {
-            displayNames.put(server, config.getString("server-names." + server, server));
-        }
+        this.serverNames = serverNames;
         this.zone = ZoneId.of(config.getString("time-zone", "Europe/Paris"));
         this.timeFormat = DateTimeFormatter.ofPattern(config.getString("time-format", "HH:mm"));
         this.dateFormat = DateTimeFormatter.ofPattern(config.getString("date-format", "dd/MM/yyyy"));
@@ -179,9 +177,9 @@ public class TabService {
         return Component.join(JoinConfiguration.separator(messages.get(viewer, "tab.server-separator", TagResolver.empty())), entries);
     }
 
-    /** Nom affiché d'un serveur (server-names), sinon son nom dans velocity.toml. */
+    /** Nom affiché d'un serveur (donné par le serveur lui-même), sinon son nom dans velocity.toml. */
     private String displayName(String server) {
-        return displayNames.getOrDefault(server, server);
+        return serverNames.displayName(server);
     }
 
     private static String serverName(Player player) {

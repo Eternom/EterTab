@@ -21,6 +21,10 @@ lire sa propre config.
   rafraîchissement (`update-interval`), plus 0,5 s après chaque connexion/changement de serveur.
 - Seuls les joueurs ajoutés par EterTab sont retirés de la liste : les PNJ d'autres plugins ne sont pas touchés.
 - LuckPerms (version Velocity) facultatif : sans lui, pas de grade et pas de tri par grade.
+- **Noms affichés des serveurs** : rien à configurer ici. Chaque serveur Paper envoie le sien (`server-display-name`
+  d'EterLib, canal `eter:server`, à chaque arrivée d'un joueur) ; `ServerNames` les garde dans `servers.yml` pour les
+  connaître dès le redémarrage du proxy. Seul un serveur peut donner son nom (un message venant d'un joueur est
+  ignoré) ; un serveur qui n'a encore rien envoyé affiche son nom de `velocity.toml`.
 - **MOTD** (config.yml > motd, pas dans lang/ : le jeu n'envoie pas sa langue au ping) : plusieurs messages au hasard ou
   à tour de rôle, maximum affiché, lignes au survol (texte + joueurs connectés), texte de version, icône PNG 64x64.
 - **Maintenance** : `/etertab maintenance on|off|status` (`etertab.admin`) ; seuls `etertab.maintenance.bypass` peuvent

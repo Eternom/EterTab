@@ -18,11 +18,6 @@ time-zone: Europe/Paris
 time-format: "HH:mm"
 date-format: "dd/MM/yyyy"
 
-# Nom affiché de chaque serveur, à la place de son nom technique de velocity.toml.
-# Un serveur absent de la liste garde son nom technique.
-server-names:
-  eter-survival-europe-001: "Survie"
-
 # Palette des messages : à garder identique à EterLib/config.yml (language.colors).
 colors:
   primary: '#FF7A00'   # titres

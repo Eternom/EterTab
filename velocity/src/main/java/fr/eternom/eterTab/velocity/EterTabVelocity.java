@@ -14,6 +14,7 @@ import fr.eternom.eterTab.velocity.helper.Messages;
 import fr.eternom.eterTab.velocity.listeners.Events;
 import fr.eternom.eterTab.velocity.module.maintenance.Maintenance;
 import fr.eternom.eterTab.velocity.module.motd.MotdService;
+import fr.eternom.eterTab.velocity.module.server.ServerNames;
 import fr.eternom.eterTab.common.Ranks;
 import fr.eternom.eterTab.velocity.module.tab.TabService;
 import net.luckperms.api.LuckPermsProvider;
@@ -45,6 +46,7 @@ public final class EterTabVelocity {
     private volatile TabService tab;
     private volatile MotdService motd;
     private Maintenance maintenance;
+    private ServerNames serverNames;
 
     @Inject
     public EterTabVelocity(ProxyServer proxy, Logger logger, @DataDirectory Path dataDirectory) {
@@ -57,8 +59,9 @@ public final class EterTabVelocity {
     public void onInitialize(ProxyInitializeEvent event) {
         try {
             maintenance = new Maintenance(dataDirectory);
+            serverNames = new ServerNames(dataDirectory, logger);
         } catch (IOException e) {
-            logger.error("maintenance.yml illisible, EterTab désactivé", e);
+            logger.error("maintenance.yml ou servers.yml illisible, EterTab désactivé", e);
             return;
         }
         if (!load()) {
@@ -86,7 +89,7 @@ public final class EterTabVelocity {
             }
             Ranks ranks = new Ranks(luckPerms ? LuckPermsProvider.get() : null);
 
-            TabService newTab = new TabService(proxy, newMessages, animations, ranks, newConfig);
+            TabService newTab = new TabService(proxy, newMessages, animations, ranks, serverNames, newConfig);
             MotdService newMotd = new MotdService(proxy, newMessages, animations, maintenance, newConfig, dataDirectory, logger);
             config = newConfig;
             messages = newMessages;
@@ -127,5 +130,9 @@ public final class EterTabVelocity {
 
     public Maintenance maintenance() {
         return maintenance;
+    }
+
+    public ServerNames serverNames() {
+        return serverNames;
     }
 }
