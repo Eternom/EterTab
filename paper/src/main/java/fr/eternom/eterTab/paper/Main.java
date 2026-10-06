@@ -30,6 +30,9 @@ import java.util.Locale;
  */
 public final class Main extends JavaPlugin {
 
+    /** Version minimale d'EterLib : les méthodes utilisées par ce plugin n'existent pas avant. */
+    private static final String REQUIRED_ETERLIB = "1.2.0";
+
     /** Soldes et total du réseau : relus en tâche de fond toutes les 5 secondes. */
     private static final long SLOW_REFRESH_TICKS = 5 * 20;
 
@@ -40,6 +43,12 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
         EterLib lib = EterLib.get();
+        if (!isAtLeast(lib.getPluginMeta().getVersion(), REQUIRED_ETERLIB)) {
+            getLogger().severe("EterTab nécessite EterLib " + REQUIRED_ETERLIB + " ou plus récent (installé : "
+                    + lib.getPluginMeta().getVersion() + "). Plugin désactivé.");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
         Messages messages = lib.messages(this, "en_us", "fr_fr");
 
         Ranks ranks = new Ranks(isEnabled("LuckPerms") ? LuckPermsProvider.get() : null);
@@ -103,5 +112,19 @@ public final class Main extends JavaPlugin {
     private NamedTextColor nameColor() {
         NamedTextColor color = NamedTextColor.NAMES.value(getConfig().getString("nametags.name-color", "white").toLowerCase(Locale.ROOT));
         return color == null ? NamedTextColor.WHITE : color;
+    }
+
+    /** "1.2.0" >= "1.1.2" : compare les nombres un à un (un suffixe comme -SNAPSHOT est ignoré). */
+    private static boolean isAtLeast(String version, String minimum) {
+        String[] actual = version.split("[.-]");
+        String[] wanted = minimum.split("[.-]");
+        for (int i = 0; i < wanted.length; i++) {
+            int a = i < actual.length && actual[i].matches("\\d+") ? Integer.parseInt(actual[i]) : 0;
+            int w = Integer.parseInt(wanted[i]);
+            if (a != w) {
+                return a > w;
+            }
+        }
+        return true;
     }
 }
