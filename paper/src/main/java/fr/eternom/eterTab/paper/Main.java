@@ -35,7 +35,7 @@ import java.util.Locale;
 public final class Main extends JavaPlugin {
 
     /** Version minimale d'EterLib : les méthodes utilisées par ce plugin n'existent pas avant. */
-    private static final String REQUIRED_ETERLIB = "1.3.0";
+    private static final String REQUIRED_ETERLIB = "1.4.0";
 
     /** Soldes et total du réseau : relus en tâche de fond toutes les 5 secondes. */
     private static final long SLOW_REFRESH_TICKS = 5 * 20;
@@ -62,10 +62,9 @@ public final class Main extends JavaPlugin {
         Messages messages = lib.messages(this, "en_us", "fr_fr");
 
         Ranks ranks = new Ranks(isEnabled("LuckPerms") ? LuckPermsProvider.get() : null);
-        // Nom affiché du serveur (sidebar) : server-display-name, sinon son nom dans le proxy
-        String serverDisplayName = getConfig().getString("server-display-name", "");
+        // Nom affiché du serveur (<server>) : celui d'EterLib, le même pour tous les plugins
         Placeholders placeholders = new Placeholders(isEnabled("Vault"), isEnabled("PlaceholderAPI"), lib.getPlayers(),
-                serverDisplayName.isBlank() ? lib.getServerName() : serverDisplayName, ZoneId.of(getConfig().getString("time-zone", "Europe/Paris")),
+                lib.getServerDisplayName(), ZoneId.of(getConfig().getString("time-zone", "Europe/Paris")),
                 DateTimeFormatter.ofPattern(getConfig().getString("time-format", "HH:mm")),
                 DateTimeFormatter.ofPattern(getConfig().getString("date-format", "dd/MM/yyyy")));
 
