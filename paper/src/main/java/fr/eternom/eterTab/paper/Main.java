@@ -12,10 +12,8 @@ import fr.eternom.eterTab.paper.module.scoreboard.DisplayTask;
 import fr.eternom.eterTab.paper.module.sidebar.SidebarService;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.luckperms.api.LuckPermsProvider;
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 
@@ -52,8 +50,10 @@ public final class Main extends JavaPlugin {
         Messages messages = lib.messages(this, "en_us", "fr_fr");
 
         Ranks ranks = new Ranks(isEnabled("LuckPerms") ? LuckPermsProvider.get() : null);
-        Placeholders placeholders = new Placeholders(economy(), isEnabled("PlaceholderAPI"), lib.getPlayers(),
-                lib.getServerName(), ZoneId.of(getConfig().getString("time-zone", "Europe/Paris")),
+        // Nom affiché du serveur (sidebar) : server-display-name, sinon son nom dans le proxy
+        String serverDisplayName = getConfig().getString("server-display-name", "");
+        Placeholders placeholders = new Placeholders(isEnabled("Vault"), isEnabled("PlaceholderAPI"), lib.getPlayers(),
+                serverDisplayName.isBlank() ? lib.getServerName() : serverDisplayName, ZoneId.of(getConfig().getString("time-zone", "Europe/Paris")),
                 DateTimeFormatter.ofPattern(getConfig().getString("time-format", "HH:mm")),
                 DateTimeFormatter.ofPattern(getConfig().getString("date-format", "dd/MM/yyyy")));
 
@@ -98,15 +98,6 @@ public final class Main extends JavaPlugin {
             getLogger().info(plugin + " absent : ses informations ne seront pas affichées");
         }
         return enabled;
-    }
-
-    private Economy economy() {
-        if (!Bukkit.getPluginManager().isPluginEnabled("Vault")) {
-            getLogger().info("Vault absent : pas de solde dans la sidebar");
-            return null;
-        }
-        RegisteredServiceProvider<Economy> provider = Bukkit.getServicesManager().getRegistration(Economy.class);
-        return provider == null ? null : provider.getProvider();
     }
 
     private NamedTextColor nameColor() {

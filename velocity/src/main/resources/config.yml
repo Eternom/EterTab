@@ -18,6 +18,11 @@ time-zone: Europe/Paris
 time-format: "HH:mm"
 date-format: "dd/MM/yyyy"
 
+# Nom affiché de chaque serveur, à la place de son nom technique de velocity.toml.
+# Un serveur absent de la liste garde son nom technique.
+server-names:
+  eter-survival-europe-001: "Survie"
+
 # Palette des messages : à garder identique à EterLib/config.yml (language.colors).
 colors:
   primary: '#FF7A00'   # titres
@@ -27,8 +32,12 @@ colors:
   success: '#5FD38D'
 
 tab:
-  # Nom d'un joueur dans la liste. Variables : <prefix> <suffix> (grade LuckPerms), <name>, <group>, <server>.
-  player-format: "<prefix><white><name></white><suffix> <dark_gray>· <info><server>"
+  # Nom d'un joueur dans la liste. Variables : <prefix> <suffix> (grade LuckPerms, espace ajoutée
+  # automatiquement), <name>, <group>, <server> (nom affiché).
+  # Joueur sur le même serveur que celui qui regarde :
+  player-format: "<prefix><white><name></white><suffix>"
+  # Joueur sur un autre serveur : on indique où il est.
+  player-format-other-server: "<prefix><white><name></white><suffix> <#8A8A8A>· <info><server>"
   # Trier par poids du grade LuckPerms (les plus hauts en premier), sinon ordre de Minecraft.
   sort-by-rank: true
 
@@ -48,9 +57,3 @@ animations:
       - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.4>E T E R N O M</gradient></bold>"
       - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.6>E T E R N O M</gradient></bold>"
       - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.8>E T E R N O M</gradient></bold>"
-  dots:
-    interval: 400
-    frames:
-      - "<accent>●<dark_gray>●●"
-      - "<dark_gray>●<accent>●<dark_gray>●"
-      - "<dark_gray>●●<accent>●"

@@ -9,6 +9,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -28,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Placeholders {
 
-    private final Economy economy; // null sans Vault ou sans économie
+    private final boolean vault;
     private final boolean placeholderApi;
     private final PlayerDirectory players;
     private final String serverName;
@@ -39,9 +40,9 @@ public class Placeholders {
     private final Map<UUID, String> balances = new ConcurrentHashMap<>();
     private volatile int networkOnline;
 
-    public Placeholders(Economy economy, boolean placeholderApi, PlayerDirectory players, String serverName,
+    public Placeholders(boolean vault, boolean placeholderApi, PlayerDirectory players, String serverName,
                         ZoneId zone, DateTimeFormatter timeFormat, DateTimeFormatter dateFormat) {
-        this.economy = economy;
+        this.vault = vault;
         this.placeholderApi = placeholderApi;
         this.players = players;
         this.serverName = serverName;
@@ -54,11 +55,24 @@ public class Placeholders {
     public void refreshSlow(Collection<UUID> online) {
         networkOnline = players.countOnline();
         balances.keySet().retainAll(online);
+        Economy economy = economy();
         if (economy != null) {
             for (UUID uuid : online) {
                 balances.put(uuid, economy.format(economy.getBalance(Bukkit.getOfflinePlayer(uuid))));
             }
         }
+    }
+
+    /**
+     * Cherchée à chaque fois, pas une seule fois au démarrage : EterEconomy peut enregistrer son économie auprès
+     * de Vault après le démarrage d'EterTab.
+     */
+    private Economy economy() {
+        if (!vault) {
+            return null;
+        }
+        RegisteredServiceProvider<Economy> provider = Bukkit.getServicesManager().getRegistration(Economy.class);
+        return provider == null ? null : provider.getProvider();
     }
 
     public TagResolver tags(Player player, Rank rank, TagResolver animation) {

@@ -3,20 +3,20 @@
 # Animations from config.yml: <anim_logo>...
 # Variables: <player> <rank> <suffix> <group> <balance> <server> <online> <max> <network> <ping>
 #            <world> <x> <y> <z> <time> <date>, and %placeholders% from PlaceholderAPI if installed.
+# Avoid <dark_gray> here: almost invisible on the sidebar background; prefer <#8A8A8A>.
 # sidebar.lines: one line per item (15 max). A missing key falls back to the plugin's built-in text.
 
 sidebar:
   title: "<anim_logo>"
   lines:
-    - "<dark_gray><date> · <time>"
     - ""
-    - "<accent><player>"
-    - " <dark_gray>▸ <info>Rank <rank>"
-    - " <dark_gray>▸ <info>Money <accent><balance>"
+    - "<accent>● <white><player>"
+    - "  <info>Rank <rank>"
+    - "  <info>Money <accent><balance>"
     - ""
-    - "<accent>Server"
-    - " <dark_gray>▸ <info>Name <accent><server>"
-    - " <dark_gray>▸ <info>Online <accent><online></accent><dark_gray>/</dark_gray><accent><network>"
-    - " <dark_gray>▸ <info>Ping <accent><ping>ms"
+    - "<accent>● <white>Network"
+    - "  <info>Server <white><server>"
+    - "  <info>Players <white><network>"
+    - "  <info>Ping <white><ping>ms"
     - ""
-    - "<primary>eternom.fr"
+    - "<#8A8A8A>eternom.fr"

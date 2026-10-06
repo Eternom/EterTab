@@ -8,6 +8,10 @@
 #  Langue par défaut et palette : EterLib/config.yml.
 #  Toute modification nécessite un redémarrage du serveur.
 
+# Nom affiché de CE serveur (<server> dans la sidebar). Vide : son nom dans le proxy
+# (server-name d'EterLib). À garder cohérent avec server-names d'EterTab-Velocity.
+server-display-name: "Survie"
+
 # Rafraîchissement de la sidebar et des grades, en ticks (20 ticks = 1 seconde).
 update-interval: 20
 

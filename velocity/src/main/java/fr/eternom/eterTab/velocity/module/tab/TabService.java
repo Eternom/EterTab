@@ -42,7 +42,10 @@ public class TabService {
     private final Animations animations;
     private final Ranks ranks;
     private final String playerFormat;
+    private final String otherServerFormat;
     private final boolean sortByRank;
+    /** Nom technique du serveur (velocity.toml) -> nom affiché (server-names). */
+    private final Map<String, String> displayNames = new HashMap<>();
     private final ZoneId zone;
     private final DateTimeFormatter timeFormat;
     private final DateTimeFormatter dateFormat;
@@ -55,7 +58,11 @@ public class TabService {
         this.animations = animations;
         this.ranks = ranks;
         this.playerFormat = config.getString("tab.player-format", "<prefix><white><name></white><suffix>");
+        this.otherServerFormat = config.getString("tab.player-format-other-server", playerFormat);
         this.sortByRank = config.getBoolean("tab.sort-by-rank", true);
+        for (String server : config.getKeys("server-names")) {
+            displayNames.put(server, config.getString("server-names." + server, server));
+        }
         this.zone = ZoneId.of(config.getString("time-zone", "Europe/Paris"));
         this.timeFormat = DateTimeFormatter.ofPattern(config.getString("time-format", "HH:mm"));
         this.dateFormat = DateTimeFormatter.ofPattern(config.getString("date-format", "dd/MM/yyyy"));
@@ -66,24 +73,32 @@ public class TabService {
         Collection<Player> players = List.copyOf(proxy.getAllPlayers());
         TagResolver animation = animations.current();
 
-        Map<UUID, Component> names = new HashMap<>();
+        // Deux versions du nom de chaque joueur : vu depuis son serveur, et vu depuis un autre (avec le serveur affiché)
+        Map<UUID, Component> sameServerNames = new HashMap<>();
+        Map<UUID, Component> otherServerNames = new HashMap<>();
         Map<UUID, Integer> orders = new HashMap<>();
         for (Player target : players) {
             Rank rank = ranks.of(target.getUniqueId());
-            names.put(target.getUniqueId(), messages.render(playerFormat, TagResolver.resolver(animation,
+            TagResolver tags = TagResolver.resolver(animation,
                     Placeholder.component("prefix", rank.prefix()),
                     Placeholder.component("suffix", rank.suffix()),
                     Placeholder.unparsed("name", target.getUsername()),
                     Placeholder.unparsed("group", rank.group()),
-                    Placeholder.unparsed("server", serverName(target)))));
+                    Placeholder.unparsed("server", displayName(serverName(target))));
+            sameServerNames.put(target.getUniqueId(), messages.render(playerFormat, tags));
+            otherServerNames.put(target.getUniqueId(), messages.render(otherServerFormat, tags));
             orders.put(target.getUniqueId(), sortByRank ? rank.weight() : 0);
         }
 
-        Set<UUID> online = names.keySet();
+        Set<UUID> online = orders.keySet();
         for (Player viewer : players) {
             TabList list = viewer.getTabList();
+            String viewerServer = serverName(viewer);
             for (Player target : players) {
-                upsert(list, target, names.get(target.getUniqueId()), orders.get(target.getUniqueId()));
+                Component name = serverName(target).equals(viewerServer)
+                        ? sameServerNames.get(target.getUniqueId())
+                        : otherServerNames.get(target.getUniqueId());
+                upsert(list, target, name, orders.get(target.getUniqueId()));
             }
             // Joueurs partis du réseau : seulement ceux qu'on a ajoutés nous-mêmes
             for (TabListEntry entry : List.copyOf(list.getEntries())) {
@@ -138,7 +153,7 @@ public class TabService {
                 Placeholder.unparsed("player", viewer.getUsername()),
                 Placeholder.unparsed("online", String.valueOf(players.size())),
                 Placeholder.unparsed("max", String.valueOf(proxy.getConfiguration().getShowMaxPlayers())),
-                Placeholder.unparsed("server", server),
+                Placeholder.unparsed("server", displayName(server)),
                 Placeholder.unparsed("server_online", String.valueOf(serverOnline)),
                 Placeholder.unparsed("ping", String.valueOf(viewer.getPing())),
                 Placeholder.unparsed("time", timeFormat.format(now)),
@@ -147,17 +162,25 @@ public class TabService {
         viewer.sendPlayerListHeaderAndFooter(messages.get(viewer, "tab.header", tags), messages.get(viewer, "tab.footer", tags));
     }
 
-    /** « survie 3 · ressources 1 » : chaque serveur avec ses joueurs, au format de tab.server-entry. */
+    /** « Survie 3 · Ressources 1 » : chaque serveur qui a des joueurs, au format de tab.server-entry. */
     private Component servers(Player viewer, Collection<Player> players, TagResolver animation) {
         List<Component> entries = new ArrayList<>();
         for (RegisteredServer registered : proxy.getAllServers()) {
             String name = registered.getServerInfo().getName();
             long count = players.stream().filter(player -> serverName(player).equals(name)).count();
+            if (count == 0) {
+                continue; // serveurs vides non listés : le pied reste court
+            }
             entries.add(messages.get(viewer, "tab.server-entry", TagResolver.resolver(animation,
-                    Placeholder.unparsed("name", name),
+                    Placeholder.unparsed("name", displayName(name)),
                     Placeholder.unparsed("count", String.valueOf(count)))));
         }
         return Component.join(JoinConfiguration.separator(messages.get(viewer, "tab.server-separator", TagResolver.empty())), entries);
+    }
+
+    /** Nom affiché d'un serveur (server-names), sinon son nom dans velocity.toml. */
+    private String displayName(String server) {
+        return displayNames.getOrDefault(server, server);
     }
 
     private static String serverName(Player player) {

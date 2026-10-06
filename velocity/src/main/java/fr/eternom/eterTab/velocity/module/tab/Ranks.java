@@ -3,6 +3,7 @@ package fr.eternom.eterTab.velocity.module.tab;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.group.Group;
@@ -37,8 +38,20 @@ public class Ranks {
         }
         CachedMetaData meta = user.getCachedData().getMetaData();
         Group group = luckPerms.getGroupManager().getGroup(user.getPrimaryGroup());
-        return new Rank(parse(meta.getPrefix()), parse(meta.getSuffix()),
+        return new Rank(spaced(parse(meta.getPrefix()), true), spaced(parse(meta.getSuffix()), false),
                 group == null ? 0 : group.getWeight().orElse(0), user.getPrimaryGroup());
+    }
+
+    /** Une espace entre le grade et le pseudo, si le préfixe (ou le suffixe) LuckPerms n'en a pas. */
+    private static Component spaced(Component part, boolean prefix) {
+        String plain = PlainTextComponentSerializer.plainText().serialize(part);
+        if (plain.isBlank()) {
+            return Component.empty();
+        }
+        if (prefix) {
+            return plain.endsWith(" ") ? part : part.append(Component.space());
+        }
+        return plain.startsWith(" ") ? part : Component.space().append(part);
     }
 
     /** Les préfixes LuckPerms sont souvent en codes « & » ; sinon on les lit comme du MiniMessage. */

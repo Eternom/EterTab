@@ -25,7 +25,7 @@ import java.time.Duration;
  * EterTab côté Velocity : liste Tab de tout le réseau (joueurs de tous les serveurs, grades LuckPerms, tri par grade)
  * avec en-tête et pied animés dans la langue de chaque joueur. Indépendant d'EterLib (qui est pour Paper).
  */
-@Plugin(id = "etertab", name = "EterTab", version = "1.0.0", authors = {"NadTum"},
+@Plugin(id = "etertab", name = "EterTab", version = "1.0.1", authors = {"NadTum"},
         description = "Liste Tab de tout le réseau",
         dependencies = {@Dependency(id = "luckperms", optional = true)})
 public final class EterTabVelocity {
