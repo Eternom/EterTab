@@ -20,3 +20,10 @@ tasks {
 tasks.withType<JavaCompile> {
     options.compilerArgs.add("-Xlint:deprecation")
 }
+
+// Code partagé par les deux jars (grades LuckPerms, animations) : compilé dans chacun
+sourceSets {
+    main {
+        java.srcDir("../common/src/main/java")
+    }
+}

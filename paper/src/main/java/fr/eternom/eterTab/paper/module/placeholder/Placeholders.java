@@ -1,7 +1,7 @@
 package fr.eternom.eterTab.paper.module.placeholder;
 
 import fr.eternom.eterLib.module.player.PlayerDirectory;
-import fr.eternom.eterTab.paper.module.placeholder.Ranks.Rank;
+import fr.eternom.eterTab.common.Ranks.Rank;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;

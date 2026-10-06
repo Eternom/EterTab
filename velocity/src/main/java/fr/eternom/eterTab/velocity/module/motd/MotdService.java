@@ -5,7 +5,7 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.ServerPing;
 import com.velocitypowered.api.util.Favicon;
 import fr.eternom.eterTab.velocity.core.Config;
-import fr.eternom.eterTab.velocity.helper.Animations;
+import fr.eternom.eterTab.common.Animations;
 import fr.eternom.eterTab.velocity.helper.Messages;
 import fr.eternom.eterTab.velocity.module.maintenance.Maintenance;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;

@@ -1,33 +1,28 @@
-package fr.eternom.eterTab.paper.module.placeholder;
+package fr.eternom.eterTab.common;
 
 import net.kyori.adventure.text.minimessage.tag.Tag;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
-import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Animations de config.yml (animations.<nom>.interval en ms, animations.<nom>.frames), utilisables avec <anim_<nom>>.
+ * Animations de la config (animations.<nom>.interval en ms, animations.<nom>.frames), utilisables avec <anim_<nom>>.
  * L'image affichée dépend de l'heure : tous les joueurs voient la même au même moment.
+ * Chaque plateforme (Paper, Velocity) lit sa config et fournit la liste.
  */
 public class Animations {
 
-    private record Animation(String name, long interval, List<String> frames) {
+    public record Animation(String name, long interval, List<String> frames) {
     }
 
-    private final List<Animation> animations = new ArrayList<>();
+    private final List<Animation> animations;
 
-    public Animations(ConfigurationSection section) {
-        if (section == null) {
-            return;
-        }
-        for (String name : section.getKeys(false)) {
-            List<String> frames = section.getStringList(name + ".frames");
-            if (!frames.isEmpty()) {
-                animations.add(new Animation(name, Math.max(50, section.getLong(name + ".interval", 200)), frames));
-            }
-        }
+    public Animations(List<Animation> animations) {
+        this.animations = animations.stream()
+                .filter(animation -> !animation.frames().isEmpty())
+                .map(animation -> new Animation(animation.name(), Math.max(50, animation.interval()), animation.frames()))
+                .toList();
     }
 
     /** Balises <anim_...> avec l'image du moment (texte MiniMessage de la config, donc de confiance). */

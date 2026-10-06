@@ -1,9 +1,9 @@
 package fr.eternom.eterTab.paper.module.scoreboard;
 
+import fr.eternom.eterTab.common.Animations;
+import fr.eternom.eterTab.common.Ranks;
+import fr.eternom.eterTab.common.Ranks.Rank;
 import fr.eternom.eterTab.paper.module.nametag.NametagService;
-import fr.eternom.eterTab.paper.module.placeholder.Animations;
-import fr.eternom.eterTab.paper.module.placeholder.Ranks;
-import fr.eternom.eterTab.paper.module.placeholder.Ranks.Rank;
 import fr.eternom.eterTab.paper.module.sidebar.SidebarService;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.Bukkit;

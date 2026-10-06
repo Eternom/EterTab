@@ -1,6 +1,6 @@
 package fr.eternom.eterTab.paper.module.nametag;
 
-import fr.eternom.eterTab.paper.module.placeholder.Ranks.Rank;
+import fr.eternom.eterTab.common.Ranks.Rank;
 import fr.eternom.eterTab.paper.module.scoreboard.Boards;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;

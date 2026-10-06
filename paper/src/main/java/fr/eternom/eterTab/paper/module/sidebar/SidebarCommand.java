@@ -1,7 +1,7 @@
 package fr.eternom.eterTab.paper.module.sidebar;
 
 import fr.eternom.eterLib.helper.message.Messages;
-import org.bukkit.Bukkit;
+import fr.eternom.eterLib.helper.task.Tasks;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.UUID;
-import java.util.logging.Level;
 
 /** /sidebar : masque ou réaffiche sa sidebar ; le choix est gardé pour tous les serveurs. */
 public class SidebarCommand implements CommandExecutor {
@@ -39,13 +38,7 @@ public class SidebarCommand implements CommandExecutor {
         }
         // Réaffichage : la sidebar revient au prochain rafraîchissement (une seconde au plus)
         messages.send(player, hidden ? "sidebar.hidden" : "sidebar.shown");
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            try {
-                preferences.save(uuid);
-            } catch (RuntimeException e) {
-                plugin.getLogger().log(Level.WARNING, "Préférence de sidebar non enregistrée pour " + player.getName(), e);
-            }
-        });
+        Tasks.async(plugin, () -> preferences.save(uuid), "Préférence de sidebar non enregistrée pour " + player.getName());
         return true;
     }
 }

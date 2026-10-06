@@ -9,6 +9,8 @@ Affichage du réseau : un projet, **deux jars**. Document développeur, à tenir
 
 Compilation : `gradlew build` → `velocity/build/libs/EterTab-Velocity-<version>.jar` et `paper/build/libs/EterTab-Paper-<version>.jar`.
 La version Velocity est aussi écrite dans `@Plugin` (`EterTabVelocity`) : à garder identique à `gradle.properties`.
+`common/` : code partagé par les deux jars (grades LuckPerms, animations), compilé dans chacun ; chaque plateforme ne fait que
+lire sa propre config.
 
 ## Côté Velocity
 
@@ -27,7 +29,7 @@ La version Velocity est aussi écrite dans `@Plugin` (`EterTabVelocity`) : à ga
 
 ## Côté Paper
 
-- Dépend d'**EterLib 1.2.0+** (langues, palette, `countOnline()` pour `<network>`).
+- Dépend d'**EterLib 1.3.0+** (langues, palette, `countOnline()` pour `<network>`).
 - Un tableau de scores par joueur : sa sidebar (sans numéros rouges, seules les lignes modifiées sont renvoyées) et une
   équipe par joueur recopiée chez tous (grade au-dessus de la tête). Un autre plugin qui change le tableau d'un joueur
   remplace celui d'EterTab.

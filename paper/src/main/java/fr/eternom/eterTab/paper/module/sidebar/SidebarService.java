@@ -2,7 +2,7 @@ package fr.eternom.eterTab.paper.module.sidebar;
 
 import fr.eternom.eterLib.helper.message.Messages;
 import fr.eternom.eterTab.paper.module.placeholder.Placeholders;
-import fr.eternom.eterTab.paper.module.placeholder.Ranks.Rank;
+import fr.eternom.eterTab.common.Ranks.Rank;
 import fr.eternom.eterTab.paper.module.scoreboard.Boards;
 import io.papermc.paper.scoreboard.numbers.NumberFormat;
 import net.kyori.adventure.text.Component;

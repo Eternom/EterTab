@@ -9,12 +9,12 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import fr.eternom.eterTab.velocity.core.Config;
 import fr.eternom.eterTab.velocity.core.Lang;
-import fr.eternom.eterTab.velocity.helper.Animations;
+import fr.eternom.eterTab.common.Animations;
 import fr.eternom.eterTab.velocity.helper.Messages;
 import fr.eternom.eterTab.velocity.listeners.Events;
 import fr.eternom.eterTab.velocity.module.maintenance.Maintenance;
 import fr.eternom.eterTab.velocity.module.motd.MotdService;
-import fr.eternom.eterTab.velocity.module.tab.Ranks;
+import fr.eternom.eterTab.common.Ranks;
 import fr.eternom.eterTab.velocity.module.tab.TabService;
 import net.luckperms.api.LuckPermsProvider;
 import org.slf4j.Logger;
@@ -22,13 +22,15 @@ import org.slf4j.Logger;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * EterTab côté Velocity : liste Tab de tout le réseau (joueurs de tous les serveurs, grades LuckPerms, tri par grade),
  * en-tête et pied animés dans la langue de chaque joueur, MOTD de la liste des serveurs et mode maintenance.
  * Indépendant d'EterLib (qui est pour Paper). /etertab reload relit config et langues sans redémarrer.
  */
-@Plugin(id = "etertab", name = "EterTab", version = "1.1.0", authors = {"NadTum"},
+@Plugin(id = "etertab", name = "EterTab", version = "1.1.1", authors = {"NadTum"},
         description = "Liste Tab du réseau, MOTD et maintenance",
         dependencies = {@Dependency(id = "luckperms", optional = true)})
 public final class EterTabVelocity {
@@ -76,7 +78,7 @@ public final class EterTabVelocity {
         try {
             Config newConfig = new Config(dataDirectory);
             Messages newMessages = new Messages(new Lang(dataDirectory, newConfig.getString("default-language", "en_us"), logger), newConfig);
-            Animations animations = new Animations(newConfig);
+            Animations animations = animations(newConfig);
 
             boolean luckPerms = proxy.getPluginManager().isLoaded("luckperms");
             if (!luckPerms) {
@@ -95,6 +97,16 @@ public final class EterTabVelocity {
             logger.error("Erreur en lisant la configuration d'EterTab", e);
             return false;
         }
+    }
+
+    /** Animations de config.yml (animations.<nom>.interval et .frames). */
+    private static Animations animations(Config config) {
+        List<Animations.Animation> animations = new ArrayList<>();
+        for (String name : config.getKeys("animations")) {
+            animations.add(new Animations.Animation(name, config.getInt("animations." + name + ".interval", 200),
+                    config.getStringList("animations." + name + ".frames")));
+        }
+        return new Animations(animations);
     }
 
     public ProxyServer proxy() {
