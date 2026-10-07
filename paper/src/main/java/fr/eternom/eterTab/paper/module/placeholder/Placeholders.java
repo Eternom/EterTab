@@ -1,5 +1,6 @@
 package fr.eternom.eterTab.paper.module.placeholder;
 
+import fr.eternom.eterLib.helper.economy.Money;
 import fr.eternom.eterLib.module.player.PlayerDirectory;
 import fr.eternom.eterTab.common.Ranks.Rank;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -9,7 +10,6 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.RegisteredServiceProvider;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -29,7 +29,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Placeholders {
 
-    private final boolean vault;
     private final boolean placeholderApi;
     private final PlayerDirectory players;
     private final String serverName;
@@ -40,9 +39,8 @@ public class Placeholders {
     private final Map<UUID, String> balances = new ConcurrentHashMap<>();
     private volatile int networkOnline;
 
-    public Placeholders(boolean vault, boolean placeholderApi, PlayerDirectory players, String serverName,
+    public Placeholders(boolean placeholderApi, PlayerDirectory players, String serverName,
                         ZoneId zone, DateTimeFormatter timeFormat, DateTimeFormatter dateFormat) {
-        this.vault = vault;
         this.placeholderApi = placeholderApi;
         this.players = players;
         this.serverName = serverName;
@@ -55,7 +53,7 @@ public class Placeholders {
     public void refreshSlow(Collection<UUID> online) {
         networkOnline = players.countOnline();
         balances.keySet().retainAll(online);
-        Economy economy = economy();
+        Economy economy = Money.economy();
         if (economy != null) {
             for (UUID uuid : online) {
                 balances.put(uuid, economy.format(economy.getBalance(Bukkit.getOfflinePlayer(uuid))));
@@ -63,17 +61,6 @@ public class Placeholders {
         }
     }
 
-    /**
-     * Cherchée à chaque fois, pas une seule fois au démarrage : EterEconomy peut enregistrer son économie auprès
-     * de Vault après le démarrage d'EterTab.
-     */
-    private Economy economy() {
-        if (!vault) {
-            return null;
-        }
-        RegisteredServiceProvider<Economy> provider = Bukkit.getServicesManager().getRegistration(Economy.class);
-        return provider == null ? null : provider.getProvider();
-    }
 
     public TagResolver tags(Player player, Rank rank, TagResolver animation) {
         ZonedDateTime now = ZonedDateTime.now(zone);

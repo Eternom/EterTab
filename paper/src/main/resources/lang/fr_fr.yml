@@ -6,6 +6,7 @@
 # Évite <dark_gray> ici : presque invisible sur le fond de la sidebar ; préfère <#8A8A8A>.
 # sidebar.lines : une ligne par élément (15 max). Une clé absente reprend le texte intégré au plugin.
 # Le préfixe des messages (« Core ») est commun à tous les plugins : EterLib/config.yml > language.prefix.
+# Textes communs (« Annuler », « Joueur inconnu », « Commande réservée aux joueurs »...) : dans EterLib/lang/, pour tous les plugins.
 
 sidebar:
   hidden: "<info>Sidebar <accent>masquée</accent>. <info>Tape <accent>/sidebar</accent> pour la réafficher."
@@ -25,5 +26,3 @@ sidebar:
     - ""
     - "<#8A8A8A>eternom.fr"
 
-command:
-  players-only: "<error>Commande réservée aux joueurs."

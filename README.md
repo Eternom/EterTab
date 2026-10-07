@@ -36,7 +36,7 @@ lire sa propre config.
 
 ## Côté Paper
 
-- Dépend d'**EterLib 1.5.3+** (sidebar temporaire des autres plugins, langues, palette, préfixe commun des messages, `countOnline()` pour `<network>`, nom affiché du serveur
+- Dépend d'**EterLib 1.6.0+** (textes communs, `Money` pour le solde, sidebar temporaire des autres plugins, langues, palette, préfixe commun des messages, `countOnline()` pour `<network>`, nom affiché du serveur
   `server-display-name` pour `<server>`, commun à tous les plugins).
 - Un tableau de scores par joueur : sa sidebar (sans numéros rouges, seules les lignes modifiées sont renvoyées) et une
   équipe par joueur recopiée chez tous (grade au-dessus de la tête). Un autre plugin qui change le tableau d'un joueur

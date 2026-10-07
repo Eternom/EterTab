@@ -6,6 +6,7 @@
 # Avoid <dark_gray> here: almost invisible on the sidebar background; prefer <#8A8A8A>.
 # sidebar.lines: one line per item (15 max). A missing key falls back to the plugin's built-in text.
 # The message prefix ("Core") is shared by all plugins: EterLib/config.yml > language.prefix.
+# Shared texts ("Cancel", "Unknown player", "players only"...): in EterLib/lang/, for every plugin.
 
 sidebar:
   hidden: "<info>Sidebar <accent>hidden</accent>. <info>Type <accent>/sidebar</accent> to show it again."
@@ -25,5 +26,3 @@ sidebar:
     - ""
     - "<#8A8A8A>eternom.fr"
 
-command:
-  players-only: "<error>This command can only be used by players."
