@@ -45,11 +45,13 @@ public class Messages {
         this.palette = TagResolver.resolver(colors);
     }
 
-    /** Texte de key dans la langue du destinataire (joueur ; console = langue par défaut), mis en forme. */
+    /**
+     * Texte de key dans la langue du destinataire, mis en forme. Langue par défaut pour la console, et pour un joueur
+     * qui vient d'arriver : son client n'a pas encore envoyé sa langue (getEffectiveLocale() vaut alors null).
+     */
     public Component get(CommandSource source, String key, TagResolver tags) {
-        String locale = source instanceof Player player
-                ? player.getEffectiveLocale().toString().toLowerCase(Locale.ROOT)
-                : lang.getDefaultLocale();
+        Locale clientLocale = source instanceof Player player ? player.getEffectiveLocale() : null;
+        String locale = clientLocale == null ? lang.getDefaultLocale() : clientLocale.toString().toLowerCase(Locale.ROOT);
         String raw = lang.get(locale, key);
         return raw == null ? Component.text(key, NamedTextColor.RED) : render(raw, tags);
     }
