@@ -76,7 +76,8 @@ public final class Main extends JavaPlugin {
                 ? new SidebarService(messages, placeholders, boards, preferences, new HashSet<>(getConfig().getStringList("sidebar.disabled-worlds")))
                 : null;
         NametagService nametags = getConfig().getBoolean("nametags.enabled", true)
-                ? new NametagService(boards, nameColor(), getConfig().getBoolean("tab-order", true))
+                ? new NametagService(boards, nameColor(), getConfig().getBoolean("tab-order", true),
+                getConfig().getBoolean("nametags.player-collisions", true))
                 : null;
         display = new DisplayTask(ranks, animations(getConfig().getConfigurationSection("animations")), sidebar, nametags);
 

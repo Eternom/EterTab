@@ -24,12 +24,15 @@ public class NametagService {
     private final Boards boards;
     private final NamedTextColor nameColor;
     private final boolean tabOrder;
+    /** false : les joueurs se traversent (ex : au lobby), par la règle de collision de leur équipe. */
+    private final boolean collisions;
     private final Map<UUID, Applied> applied = new ConcurrentHashMap<>();
 
-    public NametagService(Boards boards, NamedTextColor nameColor, boolean tabOrder) {
+    public NametagService(Boards boards, NamedTextColor nameColor, boolean tabOrder, boolean collisions) {
         this.boards = boards;
         this.nameColor = nameColor;
         this.tabOrder = tabOrder;
+        this.collisions = collisions;
     }
 
     /** Thread principal, à chaque rafraîchissement : ne fait quelque chose que si le grade a changé. */
@@ -76,6 +79,7 @@ public class NametagService {
         team.prefix(rank.prefix());
         team.suffix(rank.suffix());
         team.color(nameColor);
+        team.setOption(Team.Option.COLLISION_RULE, collisions ? Team.OptionStatus.ALWAYS : Team.OptionStatus.NEVER);
         if (!team.hasEntry(entry)) {
             team.addEntry(entry);
         }

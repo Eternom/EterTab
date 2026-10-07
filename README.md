@@ -48,5 +48,7 @@ lire sa propre config.
 - Un autre plugin peut **remplacer la sidebar un temps** via EterLib (`getSidebars()`, ex : la quête suivie dans
   EterMarket) : seul EterTab touche au tableau de scores. Ce remplacement, choisi par le joueur, passe avant `/sidebar`.
 - Équipes nommées par poids de grade : sans proxy, le Tab de Minecraft est lui aussi trié par grade (`tab-order`).
+- `nametags.player-collisions: false` : les joueurs se traversent (règle de collision de leur équipe), conseillé sur un
+  lobby. Pas l'option de Paper, dont les équipes entreraient en conflit avec celles d'EterTab.
 - Facultatifs : LuckPerms (grades), Vault + EterEconomy (`<balance>`), PlaceholderAPI (`%variables%`). Soldes et total
   du réseau sont relus en tâche de fond toutes les 5 s, jamais pendant l'affichage.
