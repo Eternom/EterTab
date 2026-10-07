@@ -17,6 +17,7 @@ import fr.eternom.eterTab.velocity.module.motd.MotdService;
 import fr.eternom.eterTab.velocity.module.server.ServerNames;
 import fr.eternom.eterTab.common.Ranks;
 import fr.eternom.eterTab.velocity.module.tab.TabService;
+import fr.eternom.eterTab.velocity.module.tab.TabTags;
 import net.luckperms.api.LuckPermsProvider;
 import org.slf4j.Logger;
 
@@ -31,7 +32,7 @@ import java.util.List;
  * en-tête et pied animés dans la langue de chaque joueur, MOTD de la liste des serveurs et mode maintenance.
  * Indépendant d'EterLib (qui est pour Paper). /etertab reload relit config et langues sans redémarrer.
  */
-@Plugin(id = "etertab", name = "EterTab", version = "1.1.4", authors = {"NadTum"},
+@Plugin(id = "etertab", name = "EterTab", version = "1.1.6", authors = {"NadTum"},
         description = "Liste Tab du réseau, MOTD et maintenance",
         dependencies = {@Dependency(id = "luckperms", optional = true)})
 public final class EterTabVelocity {
@@ -47,6 +48,7 @@ public final class EterTabVelocity {
     private volatile MotdService motd;
     private Maintenance maintenance;
     private ServerNames serverNames;
+    private final TabTags tabTags = new TabTags();
 
     @Inject
     public EterTabVelocity(ProxyServer proxy, Logger logger, @DataDirectory Path dataDirectory) {
@@ -89,7 +91,7 @@ public final class EterTabVelocity {
             }
             Ranks ranks = new Ranks(luckPerms ? LuckPermsProvider.get() : null);
 
-            TabService newTab = new TabService(proxy, newMessages, animations, ranks, serverNames, newConfig);
+            TabService newTab = new TabService(proxy, newMessages, animations, ranks, serverNames, tabTags, newConfig);
             MotdService newMotd = new MotdService(proxy, newMessages, animations, maintenance, newConfig, dataDirectory, logger);
             config = newConfig;
             messages = newMessages;
@@ -134,5 +136,9 @@ public final class EterTabVelocity {
 
     public ServerNames serverNames() {
         return serverNames;
+    }
+
+    public TabTags tabTags() {
+        return tabTags;
     }
 }

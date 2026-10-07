@@ -14,6 +14,9 @@ import fr.eternom.eterTab.common.Ranks.Rank;
 import fr.eternom.eterTab.velocity.module.server.ServerNames;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
+import net.kyori.adventure.text.minimessage.Context;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.ArgumentQueue;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 
@@ -32,7 +35,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Liste Tab de TOUT le réseau : chaque joueur voit tous les joueurs connectés au proxy, quel que soit leur serveur,
- * avec leur grade, triés par poids de grade, plus un en-tête et un pied dans sa langue.
+ * avec leur grade et les étiquettes posées par les plugins Paper (<tag_nom>, ex : métier), triés par poids de grade,
+ * plus un en-tête et un pied dans sa langue.
  *
  * Les serveurs Paper envoient eux-mêmes leurs joueurs à la liste (et la réinitialisent au changement de serveur) :
  * on complète avec les joueurs des autres serveurs et on réécrit noms et ordre, à chaque rafraîchissement.
@@ -47,13 +51,15 @@ public class TabService {
     private final String otherServerFormat;
     private final boolean sortByRank;
     private final ServerNames serverNames;
+    private final TabTags tabTags;
     private final ZoneId zone;
     private final DateTimeFormatter timeFormat;
     private final DateTimeFormatter dateFormat;
     /** Joueurs que NOUS avons mis dans les listes : les seuls qu'on retire (pas les PNJ d'autres plugins). */
     private final Set<UUID> managed = ConcurrentHashMap.newKeySet();
 
-    public TabService(ProxyServer proxy, Messages messages, Animations animations, Ranks ranks, ServerNames serverNames, Config config) {
+    public TabService(ProxyServer proxy, Messages messages, Animations animations, Ranks ranks, ServerNames serverNames, TabTags tabTags,
+                      Config config) {
         this.proxy = proxy;
         this.messages = messages;
         this.animations = animations;
@@ -62,6 +68,7 @@ public class TabService {
         this.otherServerFormat = config.getString("tab.player-format-other-server", playerFormat);
         this.sortByRank = config.getBoolean("tab.sort-by-rank", true);
         this.serverNames = serverNames;
+        this.tabTags = tabTags;
         this.zone = ZoneId.of(config.getString("time-zone", "Europe/Paris"));
         this.timeFormat = DateTimeFormatter.ofPattern(config.getString("time-format", "HH:mm"));
         this.dateFormat = DateTimeFormatter.ofPattern(config.getString("date-format", "dd/MM/yyyy"));
@@ -83,7 +90,8 @@ public class TabService {
                     Placeholder.component("suffix", rank.suffix()),
                     Placeholder.unparsed("name", target.getUsername()),
                     Placeholder.unparsed("group", rank.group()),
-                    Placeholder.unparsed("server", displayName(serverName(target))));
+                    Placeholder.unparsed("server", displayName(serverName(target))),
+                    tags(target.getUniqueId()));
             sameServerNames.put(target.getUniqueId(), messages.render(playerFormat, tags));
             otherServerNames.put(target.getUniqueId(), messages.render(otherServerFormat, tags));
             orders.put(target.getUniqueId(), sortByRank ? rank.weight() : 0);
@@ -175,6 +183,26 @@ public class TabService {
                     Placeholder.unparsed("count", String.valueOf(count)))));
         }
         return Component.join(JoinConfiguration.separator(messages.get(viewer, "tab.server-separator", TagResolver.empty())), entries);
+    }
+
+    /**
+     * <tag_nom> : les étiquettes posées par les plugins Paper pour ce joueur (TabTags) ; vide si absente, pour qu'un
+     * format qui en cite une reste propre sur un serveur ou pour un joueur qui ne l'a pas.
+     */
+    private TagResolver tags(UUID player) {
+        Map<String, Component> rendered = new HashMap<>();
+        tabTags.of(player).forEach((name, value) -> rendered.put(name, messages.render(value, TagResolver.empty())));
+        return new TagResolver() {
+            @Override
+            public Tag resolve(String name, ArgumentQueue arguments, Context context) {
+                return has(name) ? Tag.selfClosingInserting(rendered.getOrDefault(name.substring(4), Component.empty())) : null;
+            }
+
+            @Override
+            public boolean has(String name) {
+                return name.startsWith("tag_");
+            }
+        };
     }
 
     /** Nom affiché d'un serveur (donné par le serveur lui-même), sinon son nom dans velocity.toml. */

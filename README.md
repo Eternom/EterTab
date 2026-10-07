@@ -20,6 +20,9 @@ lire sa propre config.
   complète avec les joueurs des autres serveurs (profil et skin venant du proxy) et réécrit noms et ordre à chaque
   rafraîchissement (`update-interval`), plus 0,5 s après chaque connexion/changement de serveur.
 - Seuls les joueurs ajoutés par EterTab sont retirés de la liste : les PNJ d'autres plugins ne sont pas touchés.
+- **Étiquettes** des plugins Paper (canal `eter:tab`, via EterLib `getTabTags()`) : `<tag_nom>` dans `tab.player-format`
+  (ex : `<tag_job>` = métier et quêtes dispo d'EterMarket), vide si absente. Posées seulement par le serveur où est le
+  joueur, gardées jusqu'à sa déconnexion (le lobby montre encore le métier).
 - LuckPerms (version Velocity) facultatif : sans lui, pas de grade et pas de tri par grade.
 - **Noms affichés des serveurs** : rien à configurer ici. Chaque serveur Paper envoie le sien (`server-display-name`
   d'EterLib, canal `eter:server`, à chaque arrivée d'un joueur) ; `ServerNames` les garde dans `servers.yml` pour les

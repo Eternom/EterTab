@@ -28,11 +28,12 @@ colors:
 
 tab:
   # Nom d'un joueur dans la liste. Variables : <prefix> <suffix> (grade LuckPerms, espace ajoutée
-  # automatiquement), <name>, <group>, <server> (nom affiché).
+  # automatiquement), <name>, <group>, <server> (nom affiché), et <tag_...> : étiquettes posées par les
+  # plugins Paper (vides si absentes), ex : <tag_job> = métier et quêtes dispo (EterMarket).
   # Joueur sur le même serveur que celui qui regarde :
-  player-format: "<prefix><white><name></white><suffix>"
+  player-format: "<prefix><white><name></white><suffix><tag_job>"
   # Joueur sur un autre serveur : on indique où il est.
-  player-format-other-server: "<prefix><white><name></white><suffix> <#8A8A8A>· <info><server>"
+  player-format-other-server: "<prefix><white><name></white><suffix><tag_job> <#8A8A8A>· <info><server>"
   # Trier par poids du grade LuckPerms (les plus hauts en premier), sinon ordre de Minecraft.
   sort-by-rank: true
 
