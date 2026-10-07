@@ -9,6 +9,7 @@ import fr.eternom.eterTab.paper.module.scoreboard.Boards;
 import io.papermc.paper.scoreboard.numbers.NumberFormat;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -131,7 +132,12 @@ public class SidebarService {
             if (lines.size() == MAX_LINES) {
                 break;
             }
-            lines.add(render(player, line, tags));
+            Component rendered = render(player, line, tags);
+            // Une ligne faite d'une étiquette absente (ex : <tag_job> sur un serveur sans EterMarket) disparaît
+            if (line.contains("<tag_") && PlainTextComponentSerializer.plainText().serialize(rendered).isBlank()) {
+                continue;
+            }
+            lines.add(rendered);
         }
         return lines;
     }

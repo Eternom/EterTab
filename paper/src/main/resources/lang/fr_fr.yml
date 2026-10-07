@@ -3,6 +3,8 @@
 # Animations de config.yml : <anim_logo>...
 # Variables : <player> <rank> <suffix> <group> <balance> <server> <online> <max> <network> <ping>
 #             <world> <x> <y> <z> <time> <date>, et les %variables% de PlaceholderAPI s'il est installé.
+#             <tag_...> : étiquettes des autres plugins (ex : <tag_job> = métier, EterMarket) ; une ligne qui ne contient
+#             qu'une étiquette absente disparaît (ex : pas de métier affiché au lobby).
 # Évite <dark_gray> ici : presque invisible sur le fond de la sidebar ; préfère <#8A8A8A>.
 # sidebar.lines : une ligne par élément (15 max). Une clé absente reprend le texte intégré au plugin.
 # Le préfixe des messages (« Core ») est commun à tous les plugins : EterLib/config.yml > language.prefix.
@@ -18,6 +20,7 @@ sidebar:
     - "<accent>● <white><player>"
     - "  <info>Grade <rank>"
     - "  <info>Argent <accent><balance>"
+    - "<tag_job>"
     - ""
     - "<accent>● <white>Réseau"
     - "  <info>Serveur <white><server>"

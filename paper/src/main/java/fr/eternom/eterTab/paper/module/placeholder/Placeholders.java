@@ -1,9 +1,14 @@
 package fr.eternom.eterTab.paper.module.placeholder;
 
+import fr.eternom.eterLib.EterLib;
 import fr.eternom.eterLib.helper.economy.Money;
+import fr.eternom.eterLib.module.tag.PlayerTags;
 import fr.eternom.eterLib.module.player.PlayerDirectory;
 import fr.eternom.eterTab.common.Ranks.Rank;
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.kyori.adventure.text.minimessage.Context;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.ArgumentQueue;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.milkbowl.vault.economy.Economy;
@@ -82,7 +87,27 @@ public class Placeholders {
                 Placeholder.unparsed("y", String.valueOf(location.getBlockY())),
                 Placeholder.unparsed("z", String.valueOf(location.getBlockZ())),
                 Placeholder.unparsed("time", timeFormat.format(now)),
-                Placeholder.unparsed("date", dateFormat.format(now)));
+                Placeholder.unparsed("date", dateFormat.format(now)),
+                playerTags(player));
+    }
+
+    /**
+     * <tag_nom> : les étiquettes posées par les autres plugins pour ce joueur (EterLib, ex : <tag_job> = son métier
+     * dans EterMarket) ; vide si absente.
+     */
+    private static TagResolver playerTags(Player player) {
+        PlayerTags tags = EterLib.get().getPlayerTags();
+        return new TagResolver() {
+            @Override
+            public Tag resolve(String name, ArgumentQueue arguments, Context context) {
+                return has(name) ? Tag.selfClosingInserting(context.deserialize(tags.get(player, name.substring(4)))) : null;
+            }
+
+            @Override
+            public boolean has(String name) {
+                return name.startsWith("tag_");
+            }
+        };
     }
 
     /** Remplace les %variables% de PlaceholderAPI dans un texte brut (avant la mise en forme MiniMessage). */

@@ -3,6 +3,8 @@
 # Animations from config.yml: <anim_logo>...
 # Variables: <player> <rank> <suffix> <group> <balance> <server> <online> <max> <network> <ping>
 #            <world> <x> <y> <z> <time> <date>, and %placeholders% from PlaceholderAPI if installed.
+#            <tag_...>: tags from other plugins (e.g. <tag_job> = job, EterMarket); a line holding only a missing
+#            tag disappears (e.g. no job shown in the lobby).
 # Avoid <dark_gray> here: almost invisible on the sidebar background; prefer <#8A8A8A>.
 # sidebar.lines: one line per item (15 max). A missing key falls back to the plugin's built-in text.
 # The message prefix ("Core") is shared by all plugins: EterLib/config.yml > language.prefix.
@@ -18,6 +20,7 @@ sidebar:
     - "<accent>● <white><player>"
     - "  <info>Rank <rank>"
     - "  <info>Money <accent><balance>"
+    - "<tag_job>"
     - ""
     - "<accent>● <white>Network"
     - "  <info>Server <white><server>"

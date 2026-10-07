@@ -20,8 +20,8 @@ lire sa propre config.
   complète avec les joueurs des autres serveurs (profil et skin venant du proxy) et réécrit noms et ordre à chaque
   rafraîchissement (`update-interval`), plus 0,5 s après chaque connexion/changement de serveur.
 - Seuls les joueurs ajoutés par EterTab sont retirés de la liste : les PNJ d'autres plugins ne sont pas touchés.
-- **Étiquettes** des plugins Paper (canal `eter:tab`, via EterLib `getTabTags()`) : `<tag_nom>` dans `tab.player-format`
-  (ex : `<tag_job>` = métier et quêtes dispo d'EterMarket), vide si absente. Posées seulement par le serveur où est le
+- **Étiquettes** des plugins Paper (canal `eter:tab`, via EterLib `getPlayerTags()`) : `<tag_nom>` dans `tab.player-format`
+  (ex : le métier d'EterMarket, `<tag_job>`, affiché par défaut dans la sidebar plutôt qu'ici), vide si absente. Posées seulement par le serveur où est le
   joueur, gardées jusqu'à sa déconnexion (le lobby montre encore le métier).
 - LuckPerms (version Velocity) facultatif : sans lui, pas de grade et pas de tri par grade.
 - **Noms affichés des serveurs** : rien à configurer ici. Chaque serveur Paper envoie le sien (`server-display-name`
@@ -36,13 +36,15 @@ lire sa propre config.
 
 ## Côté Paper
 
-- Dépend d'**EterLib 1.6.0+** (textes communs, `Money` pour le solde, sidebar temporaire des autres plugins, langues, palette, préfixe commun des messages, `countOnline()` pour `<network>`, nom affiché du serveur
+- Dépend d'**EterLib 1.7.0+** (étiquettes `<tag_…>`, textes communs, `Money` pour le solde, sidebar temporaire des autres plugins, langues, palette, préfixe commun des messages, `countOnline()` pour `<network>`, nom affiché du serveur
   `server-display-name` pour `<server>`, commun à tous les plugins).
 - Un tableau de scores par joueur : sa sidebar (sans numéros rouges, seules les lignes modifiées sont renvoyées) et une
   équipe par joueur recopiée chez tous (grade au-dessus de la tête). Un autre plugin qui change le tableau d'un joueur
   remplace celui d'EterTab.
 - `/sidebar` (`/sb`, `etertab.sidebar.toggle`, accordée à tous) : masque ou réaffiche sa sidebar ; choix gardé en base
   (`etertab_preferences`), donc sur tous les serveurs ; sidebar cachée le temps de lire ce choix (pas de clignotement).
+- **Étiquettes** des autres plugins dans la sidebar : `<tag_nom>` (EterLib `getPlayerTags()`, ex : `<tag_job>` = métier
+  d'EterMarket, sous l'argent) ; une ligne faite d'une étiquette absente disparaît.
 - Un autre plugin peut **remplacer la sidebar un temps** via EterLib (`getSidebars()`, ex : la quête suivie dans
   EterMarket) : seul EterTab touche au tableau de scores. Ce remplacement, choisi par le joueur, passe avant `/sidebar`.
 - Équipes nommées par poids de grade : sans proxy, le Tab de Minecraft est lui aussi trié par grade (`tab-order`).

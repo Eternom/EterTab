@@ -34,8 +34,8 @@ import java.util.Locale;
  */
 public final class Main extends JavaPlugin {
 
-    /** Version minimale d'EterLib : textes communs et outils partagés (Frame, Money, NetworkBus) depuis 1.6.0. */
-    private static final String REQUIRED_ETERLIB = "1.6.0";
+    /** Version minimale d'EterLib : étiquettes du joueur (getPlayerTags) depuis 1.7.0. */
+    private static final String REQUIRED_ETERLIB = "1.7.0";
 
     /** Soldes et total du réseau : relus en tâche de fond toutes les 5 secondes. */
     private static final long SLOW_REFRESH_TICKS = 5 * 20;
