@@ -77,7 +77,7 @@ public final class Main extends JavaPlugin {
                 : null;
         NametagService nametags = getConfig().getBoolean("nametags.enabled", true)
                 ? new NametagService(boards, nameColor(), getConfig().getBoolean("tab-order", true),
-                getConfig().getBoolean("nametags.player-collisions", true))
+                getConfig().getBoolean("nametags.player-collisions", !isLobby()))
                 : null;
         display = new DisplayTask(ranks, animations(getConfig().getConfigurationSection("animations")), sidebar, nametags);
 
@@ -121,6 +121,11 @@ public final class Main extends JavaPlugin {
             }
         }
         return new Animations(animations);
+    }
+
+    /** Serveur lobby : EterHub y est installé (chargé, même s'il démarre après EterTab). */
+    private static boolean isLobby() {
+        return Bukkit.getPluginManager().getPlugin("EterHub") != null;
     }
 
     private boolean isEnabled(String plugin) {

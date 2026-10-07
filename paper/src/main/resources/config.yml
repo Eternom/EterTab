@@ -29,9 +29,9 @@ nametags:
   enabled: true
   # Couleur du pseudo au-dessus de la tête : white, gray, gold, aqua...
   name-color: white
-  # Les joueurs se poussent (comme dans Minecraft). false : ils se traversent, conseillé sur un lobby.
-  # Passe par les équipes des noms : sans effet si enabled vaut false.
-  player-collisions: true
+  # Les joueurs se poussent-ils ? Sans réglage : NON sur un lobby (EterHub installé), oui ailleurs.
+  # Pour forcer, décommente (true ou false). Passe par les équipes des noms : sans effet si enabled vaut false.
+  # player-collisions: false
 
 # Trie aussi le Tab de CE serveur par grade (utile sans proxy ; avec EterTab-Velocity, c'est le proxy qui trie).
 tab-order: true
