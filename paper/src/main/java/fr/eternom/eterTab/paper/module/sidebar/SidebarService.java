@@ -1,6 +1,8 @@
 package fr.eternom.eterTab.paper.module.sidebar;
 
+import fr.eternom.eterLib.EterLib;
 import fr.eternom.eterLib.helper.message.Messages;
+import fr.eternom.eterLib.helper.sidebar.SidebarOverrides;
 import fr.eternom.eterTab.paper.module.placeholder.Placeholders;
 import fr.eternom.eterTab.common.Ranks.Rank;
 import fr.eternom.eterTab.paper.module.scoreboard.Boards;
@@ -24,6 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Sidebar (tableau à droite de l'écran), dans la langue du joueur : titre sidebar.title et lignes sidebar.lines
  * (une liste dans lang/). Sans numéros rouges ; seules les lignes qui changent sont renvoyées au joueur.
+ * Un autre plugin peut la remplacer un temps (EterLib getSidebars, ex : la quête suivie dans EterMarket).
  */
 public class SidebarService {
 
@@ -57,14 +60,23 @@ public class SidebarService {
             return;
         }
         Objective objective = board.getObjective(OBJECTIVE);
-        if (preferences.isHidden(uuid) || disabledWorlds.contains(player.getWorld().getName())) {
+        // Sidebar temporaire d'un autre plugin (ex : quête suivie) : choisie par le joueur, elle passe avant /sidebar
+        SidebarOverrides.Content override = EterLib.get().getSidebars().content(player);
+        if ((override == null && preferences.isHidden(uuid)) || disabledWorlds.contains(player.getWorld().getName())) {
             hide(player);
             return;
         }
 
-        TagResolver tags = placeholders.tags(player, rank, animation);
-        Component title = render(player, messages.raw(player, "sidebar.title"), tags);
-        List<Component> lines = lines(player, tags);
+        Component title;
+        List<Component> lines;
+        if (override != null) {
+            title = override.title();
+            lines = override.lines().size() > MAX_LINES ? override.lines().subList(0, MAX_LINES) : override.lines();
+        } else {
+            TagResolver tags = placeholders.tags(player, rank, animation);
+            title = render(player, messages.raw(player, "sidebar.title"), tags);
+            lines = lines(player, tags);
+        }
 
         if (objective == null) {
             objective = board.registerNewObjective(OBJECTIVE, Criteria.DUMMY, title);
@@ -91,7 +103,7 @@ public class SidebarService {
         for (int i = lines.size(); i < previous.size(); i++) {
             board.resetScores(entry(i));
         }
-        shown.put(uuid, lines);
+        shown.put(uuid, List.copyOf(lines));
     }
 
     /** Retire la sidebar du joueur (masquée par /sidebar, ou monde où elle est désactivée). */

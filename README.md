@@ -33,13 +33,15 @@ lire sa propre config.
 
 ## Côté Paper
 
-- Dépend d'**EterLib 1.5.0+** (langues, palette, préfixe commun des messages, `countOnline()` pour `<network>`, nom affiché du serveur
+- Dépend d'**EterLib 1.5.3+** (sidebar temporaire des autres plugins, langues, palette, préfixe commun des messages, `countOnline()` pour `<network>`, nom affiché du serveur
   `server-display-name` pour `<server>`, commun à tous les plugins).
 - Un tableau de scores par joueur : sa sidebar (sans numéros rouges, seules les lignes modifiées sont renvoyées) et une
   équipe par joueur recopiée chez tous (grade au-dessus de la tête). Un autre plugin qui change le tableau d'un joueur
   remplace celui d'EterTab.
 - `/sidebar` (`/sb`, `etertab.sidebar.toggle`, accordée à tous) : masque ou réaffiche sa sidebar ; choix gardé en base
   (`etertab_preferences`), donc sur tous les serveurs ; sidebar cachée le temps de lire ce choix (pas de clignotement).
+- Un autre plugin peut **remplacer la sidebar un temps** via EterLib (`getSidebars()`, ex : la quête suivie dans
+  EterMarket) : seul EterTab touche au tableau de scores. Ce remplacement, choisi par le joueur, passe avant `/sidebar`.
 - Équipes nommées par poids de grade : sans proxy, le Tab de Minecraft est lui aussi trié par grade (`tab-order`).
 - Facultatifs : LuckPerms (grades), Vault + EterEconomy (`<balance>`), PlaceholderAPI (`%variables%`). Soldes et total
   du réseau sont relus en tâche de fond toutes les 5 s, jamais pendant l'affichage.
