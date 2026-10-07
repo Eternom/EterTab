@@ -1,5 +1,7 @@
 package fr.eternom.eterTab.velocity.module.server;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.PluginMessageEvent;
 import com.velocitypowered.api.event.player.ServerPostConnectEvent;
@@ -9,8 +11,10 @@ import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Reçoit le nom affiché qu'un serveur Paper envoie (EterLib, canal eter:server).
- * Seul un serveur peut le donner, et seulement le sien : un message venant d'un joueur (client modifié) est ignoré.
+ * Échange de noms avec les serveurs Paper (EterLib), canal eter:server :
+ * - reçoit le nom affiché qu'un serveur donne ; seul un serveur peut le donner, et seulement le sien : un message
+ *   venant d'un joueur (client modifié) est ignoré ;
+ * - donne à chaque serveur son vrai nom dans velocity.toml : EterLib signale dans sa console un server-name différent.
  */
 public class ServerNameListener {
 
@@ -25,12 +29,16 @@ public class ServerNameListener {
 
     /**
      * Paper n'envoie un message que sur un canal déclaré par l'autre bout : on le déclare au serveur à chaque connexion
-     * d'un joueur, ce qui déclenche l'envoi du nom par EterLib.
+     * d'un joueur, ce qui déclenche l'envoi du nom affiché par EterLib. Puis on lui donne son nom dans velocity.toml.
      */
     @Subscribe
     public void onConnected(ServerPostConnectEvent event) {
-        event.getPlayer().getCurrentServer().ifPresent(server ->
-                server.sendPluginMessage(REGISTER, CHANNEL.getId().getBytes(StandardCharsets.UTF_8)));
+        event.getPlayer().getCurrentServer().ifPresent(server -> {
+            server.sendPluginMessage(REGISTER, CHANNEL.getId().getBytes(StandardCharsets.UTF_8));
+            ByteArrayDataOutput name = ByteStreams.newDataOutput();
+            name.writeUTF(server.getServerInfo().getName());
+            server.sendPluginMessage(CHANNEL, name.toByteArray());
+        });
     }
 
     @Subscribe
