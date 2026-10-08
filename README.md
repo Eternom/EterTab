@@ -23,6 +23,9 @@ lire sa propre config.
 - **Étiquettes** des plugins Paper (canal `eter:tab`, via EterLib `getPlayerTags()`) : `<tag_nom>` dans `tab.player-format`
   (ex : le métier d'EterMarket, `<tag_job>`, affiché par défaut dans la sidebar plutôt qu'ici), vide si absente. Posées seulement par le serveur où est le
   joueur, gardées jusqu'à sa déconnexion (le lobby montre encore le métier).
+- **Badge** : l'étiquette `badge` (posée par EterClan : le tag du clan, sauf pour le staff ou si le joueur préfère son
+  grade) remplace `<prefix>` ; le tri reste celui du grade. Même règle côté Paper (pseudo au-dessus de la tête, `<rank>`
+  de la sidebar) et dans le chat d'EterChat.
 - LuckPerms (version Velocity) facultatif : sans lui, pas de grade et pas de tri par grade.
 - **Noms affichés des serveurs** : rien à configurer ici. Chaque serveur Paper envoie le sien (`server-display-name`
   d'EterLib, canal `eter:server`, à chaque arrivée d'un joueur) ; `ServerNames` les garde dans `servers.yml` pour les

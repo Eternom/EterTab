@@ -1,5 +1,7 @@
 package fr.eternom.eterTab.paper.module.scoreboard;
 
+import fr.eternom.eterLib.EterLib;
+import fr.eternom.eterLib.helper.message.Messages;
 import fr.eternom.eterTab.common.Animations;
 import fr.eternom.eterTab.common.Ranks;
 import fr.eternom.eterTab.common.Ranks.Rank;
@@ -15,13 +17,18 @@ import org.bukkit.entity.Player;
  */
 public class DisplayTask implements Runnable {
 
+    /** Étiquette EterLib qui remplace le grade (posée par EterClan : le tag du clan). */
+    private static final String BADGE = "badge";
+
     private final Ranks ranks;
     private final Animations animations;
     private final SidebarService sidebar;
     private final NametagService nametags;
+    private final Messages messages;
 
-    public DisplayTask(Ranks ranks, Animations animations, SidebarService sidebar, NametagService nametags) {
+    public DisplayTask(Ranks ranks, Animations animations, SidebarService sidebar, NametagService nametags, Messages messages) {
         this.ranks = ranks;
+        this.messages = messages;
         this.animations = animations;
         this.sidebar = sidebar;
         this.nametags = nametags;
@@ -40,7 +47,10 @@ public class DisplayTask implements Runnable {
     }
 
     private void update(Player player, TagResolver animation) {
-        Rank rank = ranks.of(player.getUniqueId());
+        // Un badge (tag de clan...) remplace le grade : au-dessus de la tête et dans la sidebar (<rank>)
+        String badge = EterLib.get().getPlayerTags().get(player, BADGE);
+        Rank rank = ranks.of(player.getUniqueId())
+                .withBadge(badge == null || badge.isBlank() ? null : messages.render(badge, TagResolver.empty()));
         if (nametags != null) {
             nametags.update(player, rank);
         }

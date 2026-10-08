@@ -79,7 +79,7 @@ public final class Main extends JavaPlugin {
                 ? new NametagService(boards, nameColor(), getConfig().getBoolean("tab-order", true),
                 getConfig().getBoolean("nametags.player-collisions", !isLobby()))
                 : null;
-        display = new DisplayTask(ranks, animations(getConfig().getConfigurationSection("animations")), sidebar, nametags);
+        display = new DisplayTask(ranks, animations(getConfig().getConfigurationSection("animations")), sidebar, nametags, messages);
 
         new Events(this, boards, display, preferences);
         new Commands(this, messages, preferences, sidebar);

@@ -84,7 +84,10 @@ public class TabService {
         Map<UUID, Component> otherServerNames = new HashMap<>();
         Map<UUID, Integer> orders = new HashMap<>();
         for (Player target : players) {
-            Rank rank = ranks.of(target.getUniqueId());
+            // Un badge posé par un plugin Paper (tag de clan...) remplace le grade ; l'ordre du Tab reste celui du grade
+            String badge = tabTags.of(target.getUniqueId()).get("badge");
+            Rank rank = ranks.of(target.getUniqueId())
+                    .withBadge(badge == null || badge.isBlank() ? null : messages.render(badge, TagResolver.empty()));
             TagResolver tags = TagResolver.resolver(animation,
                     Placeholder.component("prefix", rank.prefix()),
                     Placeholder.component("suffix", rank.suffix()),

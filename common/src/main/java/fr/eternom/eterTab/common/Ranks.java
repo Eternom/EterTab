@@ -21,6 +21,14 @@ public class Ranks {
     public record Rank(Component prefix, Component suffix, int weight, String group) {
 
         public static final Rank NONE = new Rank(Component.empty(), Component.empty(), 0, "default");
+
+        /**
+         * Badge posé par un plugin (étiquette « badge » : tag de clan...) : il remplace le préfixe du grade ; vide = le
+         * grade. Le poids (ordre du Tab) ne change pas.
+         */
+        public Rank withBadge(Component badge) {
+            return badge == null ? this : new Rank(badge, suffix, weight, group);
+        }
     }
 
     private final LuckPerms luckPerms; // null si LuckPerms n'est pas installé
