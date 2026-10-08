@@ -43,6 +43,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class TabService {
 
+    /** Voir les joueurs invisibles (même permission que sur Paper). */
+    public static final String VANISH_SEE = "eter.vanish.see";
+
     private final ProxyServer proxy;
     private final Messages messages;
     private final Animations animations;
@@ -101,10 +104,17 @@ public class TabService {
         }
 
         Set<UUID> online = orders.keySet();
+        // Les invisibles (vanish du staff, étiquette posée par EterLib) ne comptent pas et ne sont montrés qu'au staff
+        List<Player> visible = players.stream().filter(player -> !isVanished(player)).toList();
         for (Player viewer : players) {
             TabList list = viewer.getTabList();
             String viewerServer = serverName(viewer);
+            boolean seesVanished = viewer.hasPermission(VANISH_SEE);
             for (Player target : players) {
+                if (target != viewer && !seesVanished && isVanished(target)) {
+                    list.removeEntry(target.getUniqueId());
+                    continue;
+                }
                 Component name = serverName(target).equals(viewerServer)
                         ? sameServerNames.get(target.getUniqueId())
                         : otherServerNames.get(target.getUniqueId());
@@ -117,10 +127,16 @@ public class TabService {
                     list.removeEntry(id);
                 }
             }
-            updateHeaderFooter(viewer, players, animation);
+            updateHeaderFooter(viewer, visible, animation);
         }
         managed.retainAll(online);
         managed.addAll(online);
+    }
+
+    /** Invisible (vanish du staff) : étiquette « vanished » posée par EterLib. */
+    public boolean isVanished(Player player) {
+        String vanished = tabTags.of(player.getUniqueId()).get("vanished");
+        return vanished != null && !vanished.isEmpty();
     }
 
     /** Retire tout de suite un joueur qui quitte le réseau des listes des autres. */

@@ -32,7 +32,7 @@ import java.util.List;
  * en-tête et pied animés dans la langue de chaque joueur, MOTD de la liste des serveurs et mode maintenance.
  * Indépendant d'EterLib (qui est pour Paper). /etertab reload relit config et langues sans redémarrer.
  */
-@Plugin(id = "etertab", name = "EterTab", version = "1.1.12", authors = {"NadTum"},
+@Plugin(id = "etertab", name = "EterTab", version = "1.1.13", authors = {"NadTum"},
         description = "Liste Tab du réseau, MOTD et maintenance",
         dependencies = {@Dependency(id = "luckperms", optional = true)})
 public final class EterTabVelocity {
@@ -92,7 +92,7 @@ public final class EterTabVelocity {
             Ranks ranks = new Ranks(luckPerms ? LuckPermsProvider.get() : null);
 
             TabService newTab = new TabService(proxy, newMessages, animations, ranks, serverNames, tabTags, newConfig);
-            MotdService newMotd = new MotdService(proxy, newMessages, animations, maintenance, newConfig, dataDirectory, logger);
+            MotdService newMotd = new MotdService(proxy, newMessages, animations, maintenance, newConfig, dataDirectory, logger, newTab::isVanished);
             config = newConfig;
             messages = newMessages;
             tab = newTab;

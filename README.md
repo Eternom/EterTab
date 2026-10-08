@@ -26,6 +26,8 @@ lire sa propre config.
 - **Badge** : l'étiquette `badge` (posée par EterClan : le tag du clan, sauf pour le staff ou si le joueur préfère son
   grade) remplace `<prefix>` ; le tri reste celui du grade. Même règle côté Paper (pseudo au-dessus de la tête, `<rank>`
   de la sidebar) et dans le chat d'EterChat.
+- **Invisibles** (vanish du staff, EterLib 1.9.0+) : l'étiquette `vanished` retire le joueur de la liste Tab, des
+  compteurs (en-tête, pied, MOTD) et du survol du MOTD, sauf pour qui a `eter.vanish.see` (LuckPerms Velocity).
 - LuckPerms (version Velocity) facultatif : sans lui, pas de grade et pas de tri par grade.
 - **Noms affichés des serveurs** : rien à configurer ici. Chaque serveur Paper envoie le sien (`server-display-name`
   d'EterLib, canal `eter:server`, à chaque arrivée d'un joueur) ; `ServerNames` les garde dans `servers.yml` pour les

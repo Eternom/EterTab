@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -33,6 +34,8 @@ public class MotdService {
     private static final UUID NO_PLAYER = new UUID(0, 0);
 
     private final ProxyServer proxy;
+    /** Les invisibles (vanish du staff) : ni comptés ni montrés. */
+    private final Predicate<Player> hidden;
     private final Messages messages;
     private final Animations animations;
     private final Maintenance maintenance;
@@ -55,8 +58,9 @@ public class MotdService {
     private final String maintenanceVersion;
 
     public MotdService(ProxyServer proxy, Messages messages, Animations animations, Maintenance maintenance, Config config,
-                       Path dataDirectory, Logger logger) {
+                       Path dataDirectory, Logger logger, Predicate<Player> hidden) {
         this.proxy = proxy;
+        this.hidden = hidden;
         this.messages = messages;
         this.animations = animations;
         this.maintenance = maintenance;
@@ -85,7 +89,7 @@ public class MotdService {
             return original;
         }
         boolean inMaintenance = maintenance.isEnabled();
-        int online = proxy.getPlayerCount();
+        int online = (int) proxy.getAllPlayers().stream().filter(hidden.negate()).count();
         int max = maxPlayers > 0 ? maxPlayers : online + 1;
         TagResolver tags = TagResolver.resolver(animations.current(),
                 Placeholder.unparsed("online", String.valueOf(online)),
@@ -121,7 +125,7 @@ public class MotdService {
         if (inMaintenance || !hoverShowPlayers || hoverMaxPlayers == 0) {
             return lines;
         }
-        List<Player> players = new ArrayList<>(proxy.getAllPlayers());
+        List<Player> players = proxy.getAllPlayers().stream().filter(hidden.negate()).toList();
         for (Player player : players.subList(0, Math.min(hoverMaxPlayers, players.size()))) {
             lines.add(new ServerPing.SamplePlayer(messages.legacy(hoverPlayer,
                     TagResolver.resolver(tags, Placeholder.unparsed("name", player.getUsername()))), player.getUniqueId()));
