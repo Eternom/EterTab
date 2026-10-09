@@ -4,7 +4,7 @@ import fr.eternom.eterLib.EterLib;
 import fr.eternom.eterLib.helper.economy.Money;
 import fr.eternom.eterLib.module.tag.PlayerTags;
 import fr.eternom.eterLib.module.player.PlayerDirectory;
-import fr.eternom.eterTab.common.Ranks.Rank;
+import fr.eternom.eterLib.module.rank.Ranks.Rank;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.minimessage.Context;
 import net.kyori.adventure.text.minimessage.tag.Tag;

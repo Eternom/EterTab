@@ -1,4 +1,4 @@
-package fr.eternom.eterTab.common;
+package fr.eternom.eterTab.velocity.module.tab;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -12,7 +12,7 @@ import net.luckperms.api.model.user.User;
 import java.util.UUID;
 
 /**
- * Grade d'un joueur depuis LuckPerms (Paper ou Velocity : même API) : préfixe, suffixe, poids et nom du groupe principal.
+ * Grade d'un joueur depuis LuckPerms, côté proxy (côté Paper : celui d'EterLib, lib.getRanks()) : préfixe, suffixe, poids et nom du groupe principal.
  * Sans LuckPerms, tout le monde a un grade vide (le plugin fonctionne quand même).
  */
 public class Ranks {

@@ -7,7 +7,7 @@ load: POSTWORLD
 authors: [ NadTum ]
 description: Sidebar et grade au-dessus de la tête (la liste Tab du réseau est gérée par EterTab-Velocity).
 depend: [EterLib]
-softdepend: [LuckPerms, Vault, EterEconomy, PlaceholderAPI]
+softdepend: [Vault, EterEconomy, PlaceholderAPI]
 
 commands:
   sidebar:

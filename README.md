@@ -14,8 +14,8 @@ lire sa propre config.
 
 ## Côté Velocity
 
-- **Indépendant d'EterLib** (qui est pour Paper) : config, langues et palette propres (`plugins/etertab/`), mêmes conventions
-  (MiniMessage, `lang/<locale>.yml`, `en_us` par défaut, palette identique à `EterLib/config.yml`).
+- **EterVelocityLib 1.4.0+** : config et langues (`plugins/etertab/`), langue par défaut, palette et préfixe communs au
+  proxy, `legacy()` pour le MOTD. Grades LuckPerms lus ici (`module/tab/Ranks`, le proxy n'a pas EterLib).
 - Les serveurs Paper envoient leurs propres joueurs à la liste et la réinitialisent au changement de serveur : EterTab
   complète avec les joueurs des autres serveurs (profil et skin venant du proxy) et réécrit noms et ordre à chaque
   rafraîchissement (`update-interval`), plus 0,5 s après chaque connexion/changement de serveur.
@@ -41,7 +41,7 @@ lire sa propre config.
 
 ## Côté Paper
 
-- Dépend d'**EterLib 1.7.0+** (étiquettes `<tag_…>`, textes communs, `Money` pour le solde, sidebar temporaire des autres plugins, langues, palette, préfixe commun des messages, `countOnline()` pour `<network>`, nom affiché du serveur
+- Dépend d'**EterLib 1.10.0+** (grade affiché `lib.getRanks()` : LuckPerms + badge ; étiquettes `<tag_…>`, textes communs, `Money` pour le solde, sidebar temporaire des autres plugins, langues, palette, préfixe commun des messages, `countOnline()` pour `<network>`, nom affiché du serveur
   `server-display-name` pour `<server>`, commun à tous les plugins).
 - Un tableau de scores par joueur : sa sidebar (sans numéros rouges, seules les lignes modifiées sont renvoyées) et une
   équipe par joueur recopiée chez tous (grade au-dessus de la tête). Un autre plugin qui change le tableau d'un joueur

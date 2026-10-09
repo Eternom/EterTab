@@ -3,8 +3,8 @@ package fr.eternom.eterTab.paper.module.scoreboard;
 import fr.eternom.eterLib.EterLib;
 import fr.eternom.eterLib.helper.message.Messages;
 import fr.eternom.eterTab.common.Animations;
-import fr.eternom.eterTab.common.Ranks;
-import fr.eternom.eterTab.common.Ranks.Rank;
+import fr.eternom.eterLib.module.rank.Ranks;
+import fr.eternom.eterLib.module.rank.Ranks.Rank;
 import fr.eternom.eterTab.paper.module.nametag.NametagService;
 import fr.eternom.eterTab.paper.module.sidebar.SidebarService;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
@@ -18,7 +18,6 @@ import org.bukkit.entity.Player;
 public class DisplayTask implements Runnable {
 
     /** Étiquette EterLib qui remplace le grade (posée par EterClan : le tag du clan). */
-    private static final String BADGE = "badge";
 
     private final Ranks ranks;
     private final Animations animations;
@@ -47,10 +46,8 @@ public class DisplayTask implements Runnable {
     }
 
     private void update(Player player, TagResolver animation) {
-        // Un badge (tag de clan...) remplace le grade : au-dessus de la tête et dans la sidebar (<rank>)
-        String badge = EterLib.get().getPlayerTags().get(player, BADGE);
-        Rank rank = ranks.of(player.getUniqueId())
-                .withBadge(badge == null || badge.isBlank() ? null : messages.render(badge, TagResolver.empty()));
+        // Le grade affiché d'EterLib : un badge (tag de clan...) y remplace déjà le préfixe (tête, sidebar <rank>)
+        Rank rank = ranks.of(player);
         if (nametags != null) {
             nametags.update(player, rank);
         }

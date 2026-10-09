@@ -4,7 +4,7 @@ import fr.eternom.eterLib.EterLib;
 import fr.eternom.eterLib.helper.message.Messages;
 import fr.eternom.eterLib.helper.sidebar.SidebarOverrides;
 import fr.eternom.eterTab.paper.module.placeholder.Placeholders;
-import fr.eternom.eterTab.common.Ranks.Rank;
+import fr.eternom.eterLib.module.rank.Ranks.Rank;
 import fr.eternom.eterTab.paper.module.scoreboard.Boards;
 import io.papermc.paper.scoreboard.numbers.NumberFormat;
 import net.kyori.adventure.text.Component;

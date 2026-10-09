@@ -8,13 +8,12 @@ import fr.eternom.eterTab.paper.listeners.Events;
 import fr.eternom.eterTab.paper.module.nametag.NametagService;
 import fr.eternom.eterTab.common.Animations;
 import fr.eternom.eterTab.paper.module.placeholder.Placeholders;
-import fr.eternom.eterTab.common.Ranks;
+import fr.eternom.eterLib.module.rank.Ranks;
 import fr.eternom.eterTab.paper.module.scoreboard.Boards;
 import fr.eternom.eterTab.paper.module.scoreboard.DisplayTask;
 import fr.eternom.eterTab.paper.module.sidebar.SidebarPreferences;
 import fr.eternom.eterTab.paper.module.sidebar.SidebarService;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -35,7 +34,7 @@ import java.util.Locale;
 public final class Main extends JavaPlugin {
 
     /** Version minimale d'EterLib : étiquettes du joueur (getPlayerTags) depuis 1.7.0. */
-    private static final String REQUIRED_ETERLIB = "1.7.0";
+    private static final String REQUIRED_ETERLIB = "1.10.0";
 
     /** Soldes et total du réseau : relus en tâche de fond toutes les 5 secondes. */
     private static final long SLOW_REFRESH_TICKS = 5 * 20;
@@ -61,7 +60,7 @@ public final class Main extends JavaPlugin {
         EterLib lib = EterLib.get();
         Messages messages = lib.messages(this, "en_us", "fr_fr");
 
-        Ranks ranks = new Ranks(isEnabled("LuckPerms") ? LuckPermsProvider.get() : null);
+        Ranks ranks = EterLib.get().getRanks();
         // Nom affiché du serveur (<server>) : celui d'EterLib, le même pour tous les plugins
         Placeholders placeholders = new Placeholders(isEnabled("PlaceholderAPI"), lib.getPlayers(),
                 lib.getServerDisplayName(), ZoneId.of(getConfig().getString("time-zone", "Europe/Paris")),

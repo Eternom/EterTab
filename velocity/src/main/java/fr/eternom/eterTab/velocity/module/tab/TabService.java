@@ -1,16 +1,15 @@
 package fr.eternom.eterTab.velocity.module.tab;
 
+import fr.eternom.eterTab.velocity.module.tab.Ranks.Rank;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.player.TabList;
 import com.velocitypowered.api.proxy.player.TabListEntry;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
-import fr.eternom.eterTab.velocity.core.Config;
+import fr.eternom.eterVelocityLib.core.Config;
 import fr.eternom.eterTab.common.Animations;
-import fr.eternom.eterTab.velocity.helper.Messages;
-import fr.eternom.eterTab.common.Ranks;
-import fr.eternom.eterTab.common.Ranks.Rank;
+import fr.eternom.eterVelocityLib.helper.Messages;
 import fr.eternom.eterTab.velocity.module.server.ServerNames;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;

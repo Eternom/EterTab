@@ -7,15 +7,15 @@ import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
-import fr.eternom.eterTab.velocity.core.Config;
-import fr.eternom.eterTab.velocity.core.Lang;
+import fr.eternom.eterVelocityLib.core.Config;
+import fr.eternom.eterVelocityLib.EterVelocityLib;
 import fr.eternom.eterTab.common.Animations;
-import fr.eternom.eterTab.velocity.helper.Messages;
+import fr.eternom.eterVelocityLib.helper.Messages;
 import fr.eternom.eterTab.velocity.listeners.Events;
 import fr.eternom.eterTab.velocity.module.maintenance.Maintenance;
 import fr.eternom.eterTab.velocity.module.motd.MotdService;
 import fr.eternom.eterTab.velocity.module.server.ServerNames;
-import fr.eternom.eterTab.common.Ranks;
+import fr.eternom.eterTab.velocity.module.tab.Ranks;
 import fr.eternom.eterTab.velocity.module.tab.TabService;
 import fr.eternom.eterTab.velocity.module.tab.TabTags;
 import net.luckperms.api.LuckPermsProvider;
@@ -30,11 +30,12 @@ import java.util.List;
 /**
  * EterTab côté Velocity : liste Tab de tout le réseau (joueurs de tous les serveurs, grades LuckPerms, tri par grade),
  * en-tête et pied animés dans la langue de chaque joueur, MOTD de la liste des serveurs et mode maintenance.
- * Indépendant d'EterLib (qui est pour Paper). /etertab reload relit config et langues sans redémarrer.
+ * Config, langues, palette et préfixe : ceux d'EterVelocityLib (communs aux plugins du proxy). /etertab reload relit
+ * config et langues sans redémarrer.
  */
-@Plugin(id = "etertab", name = "EterTab", version = "1.1.13", authors = {"NadTum"},
+@Plugin(id = "etertab", name = "EterTab", version = "1.1.14", authors = {"NadTum"},
         description = "Liste Tab du réseau, MOTD et maintenance",
-        dependencies = {@Dependency(id = "luckperms", optional = true)})
+        dependencies = {@Dependency(id = "etervelocitylib"), @Dependency(id = "luckperms", optional = true)})
 public final class EterTabVelocity {
 
     private final ProxyServer proxy;
@@ -81,8 +82,8 @@ public final class EterTabVelocity {
     /** (Re)lit config et langues et reconstruit les services. @return false si la config est illisible (rien n'est changé). */
     public boolean load() {
         try {
-            Config newConfig = new Config(dataDirectory);
-            Messages newMessages = new Messages(new Lang(dataDirectory, newConfig.getString("default-language", "en_us"), logger), newConfig);
+            Config newConfig = new Config(EterTabVelocity.class, dataDirectory);
+            Messages newMessages = EterVelocityLib.get().messages(EterTabVelocity.class, dataDirectory, logger);
             Animations animations = animations(newConfig);
 
             boolean luckPerms = proxy.getPluginManager().isLoaded("luckperms");

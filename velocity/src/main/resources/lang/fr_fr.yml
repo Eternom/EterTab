@@ -22,7 +22,6 @@ tab:
   server-entry: "<info><name> <accent><count>"
   server-separator: "   <#8A8A8A>|</#8A8A8A>   "
 
-prefix: "<gradient:#FF7A00:#FFB347><bold>Core</bold></gradient> <dark_gray>» "
 
 command:
   usage: '<error>Utilisation : <accent>/etertab reload</accent> <info>ou <accent>/etertab maintenance on|off|status'

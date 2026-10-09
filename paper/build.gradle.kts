@@ -3,8 +3,15 @@ plugins {
 }
 
 repositories {
-    // EterLib et VaultAPI : compilés depuis GitHub
-    maven("https://jitpack.io")
+    // Plugins Eter (EterLib, API des autres plugins) : le jar de leur release GitHub (publiée par la CI à chaque tag)
+    ivy {
+        url = uri("https://github.com/Eternom/")
+        patternLayout { artifact("[module]/releases/download/[revision]/[module]-[revision].[ext]") }
+        metadataSources { artifact() }
+        content { includeGroup("com.github.Eternom") }
+    }
+    // Autres dépendances publiées sur JitPack (VaultAPI...)
+    maven("https://jitpack.io") { content { excludeGroup("com.github.Eternom") } }
     // PlaceholderAPI
     maven("https://repo.extendedclip.com/releases/")
     // Repli : EterLib publié sur cette machine (`gradlew publishToMavenLocal` dans EterLib)
@@ -14,9 +21,8 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:26.2.build.129-stable")
     // Socle commun : base, langues, palette, joueurs du réseau (plugin EterLib installé sur le serveur)
-    compileOnly("com.github.Eternom:EterLib:1.7.0")
-    // Grades (LuckPerms), solde (Vault -> EterEconomy), variables d'autres plugins (PlaceholderAPI) : tous facultatifs
-    compileOnly("net.luckperms:api:5.5")
+    compileOnly("com.github.Eternom:EterLib:1.10.3")
+    // Solde (Vault -> EterEconomy), variables d'autres plugins (PlaceholderAPI) : facultatifs. Grades : EterLib
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1") {
         exclude(group = "org.bukkit")
     }

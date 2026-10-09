@@ -2,11 +2,26 @@ plugins {
     java
 }
 
+repositories {
+    // Plugins Eter (EterLib, API des autres plugins) : le jar de leur release GitHub (publiée par la CI à chaque tag)
+    ivy {
+        url = uri("https://github.com/Eternom/")
+        patternLayout { artifact("[module]/releases/download/[revision]/[module]-[revision].[ext]") }
+        metadataSources { artifact() }
+        content { includeGroup("com.github.Eternom") }
+    }
+    // Autres dépendances publiées sur JitPack (VaultAPI...)
+    maven("https://jitpack.io") { content { excludeGroup("com.github.Eternom") } }
+    mavenLocal()
+}
+
 dependencies {
     // Fournit aussi Adventure/MiniMessage, SnakeYAML, Guice et SLF4J, présents sur le proxy
     compileOnly("com.velocitypowered:velocity-api:4.2.0")
     // Génère velocity-plugin.json à partir de l'annotation @Plugin
     annotationProcessor("com.velocitypowered:velocity-api:4.2.0")
+    // Socle commun du proxy : config, langues, palette et préfixe du réseau (plugin EterVelocityLib)
+    compileOnly("com.github.Eternom:EterVelocityLib:1.4.1")
     // Grades : fourni par le plugin LuckPerms installé sur le proxy (facultatif)
     compileOnly("net.luckperms:api:5.5")
 }
