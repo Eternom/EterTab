@@ -48,7 +48,7 @@ lire sa propre config.
   remplace celui d'EterTab.
 - `/sidebar` (`/sb`, `etertab.sidebar.toggle`, accordée à tous) : masque ou réaffiche sa sidebar ; choix gardé en base
   (`etertab_preferences`), donc sur tous les serveurs ; sidebar cachée le temps de lire ce choix (pas de clignotement).
-- **Étiquettes** des autres plugins dans la sidebar : `<tag_nom>` (EterLib `getPlayerTags()`, ex : `<tag_job>` = métier
+- **Étiquettes** des autres plugins dans la sidebar : `<tag_nom>` (EterLib `getPlayerTags()`, ex : `<tag_job>` = métier d'EterMarket, `<tag_pass>` = palier du pass d'EterReward, `<tag_success>` = Premiers pas ou points d'EterSuccess ; ancien exemple : métier
   d'EterMarket, sous l'argent) ; une ligne faite d'une étiquette absente disparaît.
 - Un autre plugin peut **remplacer la sidebar un temps** via EterLib (`getSidebars()`, ex : la quête suivie dans
   EterMarket) : seul EterTab touche au tableau de scores. Ce remplacement, choisi par le joueur, passe avant `/sidebar`.

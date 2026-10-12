@@ -21,6 +21,8 @@ sidebar:
     - "  <info>Rank <rank>"
     - "  <info>Money <accent><balance>"
     - "<tag_job>"
+    - "<tag_pass>"
+    - "<tag_success>"
     - ""
     - "<accent>● <white>Network"
     - "  <info>Server <white><server>"
