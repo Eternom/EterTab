@@ -20,7 +20,7 @@ date-format: "dd/MM/yyyy"
 tab:
   # Nom d'un joueur dans la liste. Variables : <prefix> <suffix> (grade LuckPerms, espace ajoutée
   # automatiquement), <name>, <group>, <server> (nom affiché), et <tag_...> : étiquettes posées par les
-  # plugins Paper (vides si absentes), ex : <tag_job> = métier et quêtes dispo (EterMarket, plutôt dans la sidebar).
+  # plugins Paper (vides si absentes), ex : <tag_job> = métier et quêtes dispo (EterJob, plutôt dans la sidebar).
   # Joueur sur le même serveur que celui qui regarde :
   player-format: "<prefix><white><name></white><suffix>"
   # Joueur sur un autre serveur : on indique où il est.

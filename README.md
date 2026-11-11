@@ -21,7 +21,7 @@ lire sa propre config.
   rafraîchissement (`update-interval`), plus 0,5 s après chaque connexion/changement de serveur.
 - Seuls les joueurs ajoutés par EterTab sont retirés de la liste : les PNJ d'autres plugins ne sont pas touchés.
 - **Étiquettes** des plugins Paper (canal `eter:tab`, via EterLib `getPlayerTags()`) : `<tag_nom>` dans `tab.player-format`
-  (ex : le métier d'EterMarket, `<tag_job>`, affiché par défaut dans la sidebar plutôt qu'ici), vide si absente. Posées seulement par le serveur où est le
+  (ex : le métier d'EterJob, `<tag_job>`, affiché par défaut dans la sidebar plutôt qu'ici), vide si absente. Posées seulement par le serveur où est le
   joueur, gardées jusqu'à sa déconnexion (le lobby montre encore le métier).
 - **Badge** : l'étiquette `badge` (posée par EterClan : le tag du clan, sauf pour le staff ou si le joueur préfère son
   grade) remplace `<prefix>` ; le tri reste celui du grade. Même règle côté Paper (pseudo au-dessus de la tête, `<rank>`
@@ -48,10 +48,10 @@ lire sa propre config.
   remplace celui d'EterTab.
 - `/sidebar` (`/sb`, `etertab.sidebar.toggle`, accordée à tous) : masque ou réaffiche sa sidebar ; choix gardé en base
   (`etertab_preferences`), donc sur tous les serveurs ; sidebar cachée le temps de lire ce choix (pas de clignotement).
-- **Étiquettes** des autres plugins dans la sidebar : `<tag_nom>` (EterLib `getPlayerTags()`, ex : `<tag_job>` = métier d'EterMarket, `<tag_pass>` = palier du pass d'EterReward, `<tag_success>` = Premiers pas ou points d'EterSuccess ; ancien exemple : métier
-  d'EterMarket, sous l'argent) ; une ligne faite d'une étiquette absente disparaît.
+- **Étiquettes** des autres plugins dans la sidebar : `<tag_nom>` (EterLib `getPlayerTags()`, ex : `<tag_job>` = métier d'EterJob, `<tag_pass>` = palier du pass d'EterReward, `<tag_success>` = Premiers pas ou points d'EterSuccess ; ancien exemple : métier
+  d'EterJob, sous l'argent) ; une ligne faite d'une étiquette absente disparaît.
 - Un autre plugin peut **remplacer la sidebar un temps** via EterLib (`getSidebars()`, ex : la quête suivie dans
-  EterMarket) : seul EterTab touche au tableau de scores. Ce remplacement, choisi par le joueur, passe avant `/sidebar`.
+  EterJob) : seul EterTab touche au tableau de scores. Ce remplacement, choisi par le joueur, passe avant `/sidebar`.
 - Équipes nommées par poids de grade : sans proxy, le Tab de Minecraft est lui aussi trié par grade (`tab-order`).
 - Collisions entre joueurs (règle de collision de leur équipe) : coupées d'office sur un lobby (EterHub installé),
   normales ailleurs ; `nametags.player-collisions` force l'un ou l'autre. Pas l'option de Paper, dont les équipes entreraient en conflit avec celles d'EterTab.

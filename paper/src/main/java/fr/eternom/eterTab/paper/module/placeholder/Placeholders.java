@@ -93,7 +93,7 @@ public class Placeholders {
 
     /**
      * <tag_nom> : les étiquettes posées par les autres plugins pour ce joueur (EterLib, ex : <tag_job> = son métier
-     * dans EterMarket) ; vide si absente.
+     * dans EterJob) ; vide si absente.
      */
     private static TagResolver playerTags(Player player) {
         PlayerTags tags = EterLib.get().getPlayerTags();

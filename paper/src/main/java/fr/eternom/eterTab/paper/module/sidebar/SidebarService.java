@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Sidebar (tableau à droite de l'écran), dans la langue du joueur : titre sidebar.title et lignes sidebar.lines
  * (une liste dans lang/). Sans numéros rouges ; seules les lignes qui changent sont renvoyées au joueur.
- * Un autre plugin peut la remplacer un temps (EterLib getSidebars, ex : la quête suivie dans EterMarket).
+ * Un autre plugin peut la remplacer un temps (EterLib getSidebars, ex : la quête suivie dans EterQuest).
  */
 public class SidebarService {
 
@@ -133,7 +133,7 @@ public class SidebarService {
                 break;
             }
             Component rendered = render(player, line, tags);
-            // Une ligne faite d'une étiquette absente (ex : <tag_job> sur un serveur sans EterMarket) disparaît
+            // Une ligne faite d'une étiquette absente (ex : <tag_job> sur un serveur sans EterJob) disparaît
             if (line.contains("<tag_") && PlainTextComponentSerializer.plainText().serialize(rendered).isBlank()) {
                 continue;
             }
