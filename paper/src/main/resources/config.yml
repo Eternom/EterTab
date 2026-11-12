@@ -42,13 +42,13 @@ animations:
   logo:
     interval: 120
     frames:
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-1.0>ETERNOM</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.8>ETERNOM</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.6>ETERNOM</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.4>ETERNOM</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.2>ETERNOM</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.0>ETERNOM</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.2>ETERNOM</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.4>ETERNOM</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.6>ETERNOM</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.8>ETERNOM</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-1.0>ETERCRAFT</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.8>ETERCRAFT</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.6>ETERCRAFT</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.4>ETERCRAFT</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.2>ETERCRAFT</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.0>ETERCRAFT</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.2>ETERCRAFT</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.4>ETERCRAFT</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.6>ETERCRAFT</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.8>ETERCRAFT</gradient></bold>"

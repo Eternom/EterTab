@@ -82,6 +82,10 @@ public final class EterTabVelocity {
     /** (Re)lit config et langues et reconstruit les services. @return false si la config est illisible (rien n'est changé). */
     public boolean load() {
         try {
+            java.util.List<Path> rebranded = fr.eternom.eterTab.common.Rebrand.migrate(dataDirectory);
+            if (!rebranded.isEmpty()) {
+                logger.info("Nom du réseau mis à jour (EterCraft) dans : {}", rebranded);
+            }
             Config newConfig = new Config(EterTabVelocity.class, dataDirectory);
             Messages newMessages = EterVelocityLib.get().messages(EterTabVelocity.class, dataDirectory, logger);
             Animations animations = animations(newConfig);

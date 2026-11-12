@@ -34,16 +34,16 @@ animations:
   logo:
     interval: 120
     frames:
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-1.0>E T E R N O M</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.8>E T E R N O M</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.6>E T E R N O M</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.4>E T E R N O M</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.2>E T E R N O M</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.0>E T E R N O M</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.2>E T E R N O M</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.4>E T E R N O M</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.6>E T E R N O M</gradient></bold>"
-      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.8>E T E R N O M</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-1.0>E T E R C R A F T</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.8>E T E R C R A F T</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.6>E T E R C R A F T</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.4>E T E R C R A F T</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:-0.2>E T E R C R A F T</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.0>E T E R C R A F T</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.2>E T E R C R A F T</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.4>E T E R C R A F T</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.6>E T E R C R A F T</gradient></bold>"
+      - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00:0.8>E T E R C R A F T</gradient></bold>"
 
 # ============================================================
 #  MOTD : ce qu'affiche la liste des serveurs du jeu
@@ -59,13 +59,13 @@ motd:
   mode: rotate
   rotate-seconds: 10
   messages:
-    - "           <bold><gradient:#FF7A00:#FFE0B2:#FF7A00>E T E R N O M</gradient></bold><newline><info>     Survie multi-serveurs <#8A8A8A>|</#8A8A8A> <accent>Rejoins-nous !"
-    - "           <bold><gradient:#FF7A00:#FFE0B2:#FF7A00>E T E R N O M</gradient></bold><newline><info>  Homes, inventaire synchronisé et économie"
+    - "         <bold><gradient:#FF7A00:#FFE0B2:#FF7A00>E T E R C R A F T</gradient></bold><newline><info>     Survie multi-serveurs <#8A8A8A>|</#8A8A8A> <accent>Rejoins-nous !"
+    - "         <bold><gradient:#FF7A00:#FFE0B2:#FF7A00>E T E R C R A F T</gradient></bold><newline><info>  Homes, inventaire synchronisé et économie"
   # Maximum affiché ; 0 = toujours un de plus que les joueurs en ligne.
   max-players: 500
   # Lignes au survol du nombre de joueurs, puis la liste des joueurs connectés.
   hover:
-    - "<primary><bold>Eternom</bold>"
+    - "<primary><bold>EterCraft</bold>"
     - "<info>Survie multi-serveurs"
     - ""
   hover-show-players: true
@@ -86,7 +86,7 @@ motd:
 
 maintenance:
   motd:
-    - "           <bold><gradient:#FF7A00:#FFE0B2:#FF7A00>E T E R N O M</gradient></bold><newline><error>   Maintenance en cours <#8A8A8A>|</#8A8A8A> <info>reviens vite !"
+    - "         <bold><gradient:#FF7A00:#FFE0B2:#FF7A00>E T E R C R A F T</gradient></bold><newline><error>   Maintenance en cours <#8A8A8A>|</#8A8A8A> <info>reviens vite !"
   hover:
     - "<error>Maintenance en cours"
     - "<info>Suis l'avancement sur discord.gg/eternom"

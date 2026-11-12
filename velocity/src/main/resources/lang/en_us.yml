@@ -36,7 +36,7 @@ maintenance:
   save-failed: "<error>Could not save the maintenance state (see the console)."
   # Message shown to players sent away (a list = several lines)
   kick:
-    - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00>E T E R N O M</gradient></bold>"
+    - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00>E T E R C R A F T</gradient></bold>"
     - ""
     - "<error>The server is under maintenance."
     - "<info>Come back in a moment!"

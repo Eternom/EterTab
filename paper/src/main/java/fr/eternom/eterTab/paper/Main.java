@@ -47,6 +47,12 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
+        // Le réseau s'appelle EterCraft : l'ancien nom est remplacé une fois dans les fichiers déjà installés
+        java.util.List<java.nio.file.Path> rebranded = fr.eternom.eterTab.common.Rebrand.migrate(getDataFolder().toPath());
+        if (!rebranded.isEmpty()) {
+            reloadConfig();
+            getLogger().info("Nom du réseau mis à jour (EterCraft) dans : " + rebranded);
+        }
         // En premier : vérifie la version d'EterLib (un EterLib < 1.3.0 n'a pas requireVersion, d'où le catch)
         try {
             if (!EterLib.requireVersion(this, REQUIRED_ETERLIB)) {

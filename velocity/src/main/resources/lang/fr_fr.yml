@@ -36,7 +36,7 @@ maintenance:
   save-failed: "<error>Impossible d'enregistrer l'état de la maintenance (voir la console)."
   # Message affiché aux joueurs renvoyés (une liste = plusieurs lignes)
   kick:
-    - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00>E T E R N O M</gradient></bold>"
+    - "<bold><gradient:#FF7A00:#FFE0B2:#FF7A00>E T E R C R A F T</gradient></bold>"
     - ""
     - "<error>Le serveur est en maintenance."
     - "<info>Reviens dans quelques instants !"
